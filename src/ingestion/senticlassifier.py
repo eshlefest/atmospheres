@@ -20,8 +20,11 @@ class SentiClassifier():
 
 
     def train(self, num_samples):
+        """uses connection to mongodb to read in tweets that contain :) and :(
+            the size of the training data is 2 * num_samples"""
         
         print "Querying DB"
+        # read samples from DB
         posTweets = self.reader.get_N_results("\\:\\)",num_samples)
         negTweets = self.reader.get_N_results("\\:\\(",num_samples)
         
@@ -35,6 +38,8 @@ class SentiClassifier():
         random.shuffle(labeled_tweets)
 
         print "compiling all words list"
+        # extract all unique words from the tweets
+        # these will be used as features
         self.all_words = self.get_all_words(labeled_tweets)
 
         # remove stop words
@@ -58,6 +63,7 @@ class SentiClassifier():
         print(nltk.classify.accuracy(self.classifier, test_set))
 
     def get_all_words(self,labeled_tweets):
+        """ returns a set of all unique words """
         tweets = [t for t,polarity in labeled_tweets]
         all_words = [] 
         for t in tweets:
@@ -66,11 +72,13 @@ class SentiClassifier():
         return set(all_words)
 
     def classify(self,text):
+        """runs the classifier on the input text """
         document = text.split(" ")
         features = self.document_features(document)
         return self.classifier.classify(features)
 
     def document_features(self,document): 
+        """ extracts the features from the input document """
         document_words = set(document)
         features = {}
         for word in self.all_words:
@@ -89,6 +97,7 @@ class SentiClassifier():
         return self.stemmer.stem(w.lower())
 
     def load_pickled_classifier(this):
+        """ sets the classifier and features list to the serialized classifier in properties.py """
         this.classifier, this.all_words = get_pickled_classifier()
 
 if __name__ == '__main__':

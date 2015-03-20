@@ -5,22 +5,19 @@ DEFAULT_COLLECTION = "tweets"
 
 class MongoBridge:
 
-    def __init__(this):
-        this.client = MongoClient()
-        this.db = this.client[database]
-        this.collection = this.db[collection]
-
     def __init__(this, database=DEFAULT_DATABASE,collection=DEFAULT_COLLECTION):
         this.client = MongoClient()
         this.db = this.client[database]
         this.collection = this.db[collection]
 
     def text_regex_query(this,regex):
+        """ returns one document from db whose text field matches regex """
         query = {}
         query["text"] = {"$regex":regex}
         return this.collection.find_one(query)
 
     def get_N_results(this,regex,n):
+        """ returns N results from the db whose text field matches regex """
         query = {}
         query["text"] = {"$regex":regex}
         cursor = this.collection.find(query)
@@ -32,6 +29,7 @@ class MongoBridge:
         this.client.close()
 
     def write(this,data):
+        """ writes data to db """
         this.collection.insert(data)
 
 

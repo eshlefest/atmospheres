@@ -13,12 +13,10 @@ san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]
 
 #This is a basic listener that just prints received tweets to stdout.
 class TweetStreamReader(StreamListener):
-
-    def __init__(this):
-        this.classifier = SentiClassifier()
-        this.mongo_bridge = MongoBridge()
+    """ class used to read from the twitter streaming api"""
 
     def on_data(self, data):
+        """ callback that is called when data is received """
         self.data_callback(data)
         return True
 
@@ -26,6 +24,7 @@ class TweetStreamReader(StreamListener):
         print status
 
     def set_data_callback(self,func):
+        """ sets the callback used in on_data """
         self.data_callback = func
 
 

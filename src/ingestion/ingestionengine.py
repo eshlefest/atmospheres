@@ -15,6 +15,9 @@ san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]
 # upper right: 37.839899, -122.358464
 
 def on_tweet_received_callback(data):
+    """ this function will be set as the callback function for the tweet reader, will be passed
+        the tweet as an argument.
+         it classifies the text, then saves the necessary info to the db"""
     data = json.loads(data)
     text = data["text"]
     sentiment = classifier.classify(text)

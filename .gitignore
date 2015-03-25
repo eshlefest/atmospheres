@@ -1,2 +1,9 @@
 *.pyc
 **/properties.py
+# Python egg files
+*.eggs
+.eggs
+*.egg-info
+
+#Mongo db
+db/data/

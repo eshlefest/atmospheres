@@ -1,0 +1,4 @@
+tweepy 
+nltk 
+pymongo
+flask

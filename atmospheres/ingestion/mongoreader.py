@@ -1,36 +1,37 @@
 from pymongo import MongoClient
 
-DEFAULT_DATABASE = "tweetdata"
-DEFAULT_COLLECTION = "tweets"
 
-class MongoBridge:
 
-    def __init__(this, database=DEFAULT_DATABASE,collection=DEFAULT_COLLECTION):
-        this.client = MongoClient()
-        this.db = this.client[database]
-        this.collection = this.db[collection]
+class MongoReader:
+    DEFAULT_DATABASE = "tweetdata"
+    DEFAULT_COLLECTION = "tweets"
 
-    def text_regex_query(this,regex):
+    def __init__(self, database=DEFAULT_DATABASE,collection=DEFAULT_COLLECTION):
+        self.client = MongoClient()
+        self.db = self.client[database]
+        self.collection = self.db[collection]
+
+    def text_regex_query(self, regex):
         """ returns one document from db whose text field matches regex """
         query = {}
         query["text"] = {"$regex":regex}
-        return this.collection.find_one(query)
+        return self.collection.find_one(query)
 
-    def get_N_results(this,regex,n):
+    def get_N_results(self, regex, n):
         """ returns N results from the db whose text field matches regex """
         query = {}
         query["text"] = {"$regex":regex}
-        cursor = this.collection.find(query)
+        cursor = self.collection.find(query)
 
         res = [cursor.next() for i in range(n)]
         return res
 
-    def close(this):
-        this.client.close()
+    def close(self):
+        self.client.close()
 
-    def write(this,data):
+    def write(self, data):
         """ writes data to db """
-        this.collection.insert(data)
+        self.collection.insert(data)
 
 
 

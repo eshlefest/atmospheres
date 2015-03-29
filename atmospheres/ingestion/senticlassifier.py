@@ -87,8 +87,8 @@ class SentiClassifier():
 
     def preprocess_word(self,word):
         """ this method does 3 preprocessing steps:
-            1.  gets rid of all punctiation as defined in the python string library
-                punctionarion includes: '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+            1.  gets rid of all punctuation as defined in the python string library
+                punctuation includes: '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
             2.  case folding, (everything in lowercase)
             3.  Stemming using the Porter Stemmer included in the
                 Python Natural Language Toolkit (NLTK) """

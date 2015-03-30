@@ -1,12 +1,12 @@
 import pickle
-from mongoreader import MongoBridge
+from mongoreader import MongoReader
 from properties import *
 
 
-def get_mongo_bridge():
+def get_mongo_reader():
     """Returns an instance of the MongoBridge that is connected to the 
        database defined in properties.py """
-    return MongoBridge(DATABASE_NAME,COLLECTION_NAME)
+    return MongoReader(DATABASE_NAME,COLLECTION_NAME)
 
 def get_twitter_properties():
     """ returns a dictionary with the twitter api information defined in 

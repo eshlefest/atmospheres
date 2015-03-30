@@ -3,7 +3,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 from senticlassifier import SentiClassifier
-from mongoreader import MongoBridge
+from mongoreader import MongoReader
 from utils import get_twitter_properties
 
 san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]

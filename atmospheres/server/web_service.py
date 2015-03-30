@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, url_for, send_from_directory
 from atmospheres.ingestion.mongoreader import MongoReader
 
 
@@ -7,7 +7,9 @@ app.mongoreader = MongoReader()
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    f = open("server/static/geo.html")
+    return f.read()
+
 
 @app.route('/postdata/', methods=['POST'])
 def store_post():
@@ -17,7 +19,7 @@ def store_post():
     data = { "mypostdata": request.json }
     print data
     app.mongoreader.write(data)
-    return 'Thank you for the data'    
+    return 'Thank you for the data'
 
 
 def main():

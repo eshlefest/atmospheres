@@ -1,4 +1,4 @@
-from mongoreader import MongoBridge
+from mongoreader import MongoReader
 import nltk, random, re, string
 from nltk.classify import apply_features
 from nltk.stem.porter import *
@@ -13,7 +13,7 @@ TEST_SET_PROPORTION = .1
 class SentiClassifier():
 
     def __init__(self):
-        self.reader = MongoBridge()
+        self.reader = MongoReader()
         self.regex = re.compile('[%s]' % re.escape(string.punctuation))
         self.stemmer = PorterStemmer()
         self.stop_words = set(stopwords.words("english"))

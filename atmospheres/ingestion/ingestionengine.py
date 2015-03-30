@@ -1,12 +1,12 @@
 from tweetreader import TweetStreamReader
-from utils import get_twitter_properties, get_mongo_bridge
-from mongoreader import MongoBridge
+from utils import get_twitter_properties, get_mongo_reader
+from mongoreader import MongoReader
 from senticlassifier import SentiClassifier
 from tweepy import OAuthHandler
 from tweepy import Stream
 import json
 
-mongo = get_mongo_bridge()
+mongo = get_mongo_reader()
 classifier = SentiClassifier()
 
 san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]

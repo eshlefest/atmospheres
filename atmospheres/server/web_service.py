@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for, send_from_directory
+from flask import Flask, request, send_from_directory
 from atmospheres.ingestion.mongoreader import MongoReader
 
 
@@ -7,6 +7,8 @@ app.mongoreader = MongoReader()
 
 @app.route('/')
 def hello_world():
+    # should use send_from_directory("server/static" "geo.html") but cant get it to work
+
     f = open("server/static/geo.html")
     return f.read()
 

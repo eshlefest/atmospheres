@@ -27,11 +27,16 @@ setup(
         'mock>=1.0.1',
         'coverage',
     ],
+    include_package_data=True,
     entry_points={
         'console_scripts': [
             'atmospheres-web-service = atmospheres.server.web_service:main'
         ]
+    },
+    package_data={
+    'static': 'atmospheres/static/*'
     }
+    
 
 )
 

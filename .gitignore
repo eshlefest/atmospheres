@@ -1,5 +1,4 @@
-*.pyc
-MANIFEST.in
+*pyc
 build/*
 dist/*
 

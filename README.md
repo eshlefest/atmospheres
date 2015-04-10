@@ -30,7 +30,7 @@ virtual environment and then run the following command.
 ``pip install -e . -U``
 
 ## Running
-Just run the following command on the console. If you have virtual enviroment then run it inside virtual environment.
+Just run the following command on the console from root directory of project ie, next to setup.py. If you have virtual enviroment then run it inside virtual environment.
 ``atmospheres-web-service``
 Once the application is running you will see the following log line on the console.
 ``

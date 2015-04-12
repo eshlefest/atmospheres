@@ -35,6 +35,7 @@ setup(
     },
     package_data={
     'static': 'atmospheres/static/*'
+    'templates': 'atmospheres/templates/*'
     }
     
 

@@ -1,1 +1,2 @@
 recursive-include atmospheres/static *
+recursive-include atmospheres/templates *

@@ -39,10 +39,7 @@ def on_tweet_received_callback(data):
     print "%10s: %s"%(sentiment,text)
 
 
-
-
-if __name__ == '__main__':
-
+def main():
     classifier.load_pickled_classifier()
 
     twitter_properties = get_twitter_properties()
@@ -57,3 +54,10 @@ if __name__ == '__main__':
 
     # filters for tweets in the bounding box described by san_francisco
     stream.filter(locations=san_francisco)
+
+
+if __name__ == '__main__':
+    main()
+
+
+    

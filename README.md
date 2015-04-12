@@ -30,6 +30,17 @@ virtual environment and then run the following command.
 ``pip install -e . -U``
 
 ## Running
+
+### Start Reading and Recording Tweets
+update atmospheres/ingestion/properties.py with your Twitter API credentials 
+* you will need a twitter account
+* Get your API keys: ([info here](https://twittercommunity.com/t/how-to-get-my-api-key/7033) , or see Ryan)
+
+Make sure your MongoDB instance is running.  Execute the following command from project rood directory:
+``atmospheres-ingest``
+After several seconds, you should see tweets and their sentiment printed to the console.  They are also being stored in the DB.
+
+### Start the Web Server
 Just run the following command on the console from root directory of project ie, next to setup.py. If you have virtual enviroment then run it inside virtual environment.
 ``atmospheres-web-service``
 Once the application is running you will see the following log line on the console.

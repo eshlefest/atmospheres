@@ -32,9 +32,8 @@ virtual environment and then run the following command.
 ## Running
 
 ### Start Reading and Recording Tweets
-update atmospheres/ingestion/properties.py with your Twitter API credentials 
-* you will need a twitter account
-* Get your API keys: ([info here](https://twittercommunity.com/t/how-to-get-my-api-key/7033) , or see Ryan)
+update atmospheres/ingestion/properties.py with the twitter API keys
+* these keys are shared in a google document, if you cant access it, let Ryan know
 
 Make sure your MongoDB instance is running.  Execute the following command from project rood directory:
 ``atmospheres-ingest``

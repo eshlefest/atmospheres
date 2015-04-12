@@ -29,6 +29,12 @@ virtual environment and then run the following command.
 
 ``pip install -e . -U``
 
+download NLTK stopwords corpoora:
+``sudo python -m nltk.downloader``
+* click on "Corpora" tab
+* scroll down, click on 'stopwords'
+* click 'download'
+
 ## Running
 
 ### Start Reading and Recording Tweets

@@ -5,7 +5,9 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import json
 
-mongo = get_mongo_reader()
+from atmospheres.models.tweet import Tweet
+
+db = get_mongo_reader()
 classifier = SentiClassifier()
 
 san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]
@@ -24,17 +26,19 @@ def on_tweet_received_callback(data):
     try:
         coords = data["geo"]["coordinates"]
     except:
-        coords = "none"
+        coords = None
 
-            
+    tweet = Tweet(
+        None,  # Id 
+        text, 
+        sentiment,
+        None, 
+        data["created_at"],
+        coords[0] if coords else None,
+        coords[1] if coords else None,
+    )
 
-    out = {"text": text,
-            "sentiment": sentiment,
-            "coordinates": coords,
-            "created_at": data["created_at"]}
-
-
-    mongo.write(out)
+    db.write(tweet.to_dict())
     print "%10s: %s"%(sentiment,text)
 
 

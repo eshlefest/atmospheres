@@ -1,7 +1,5 @@
 from pymongo import MongoClient
 
-
-
 class DataStore:
     DEFAULT_DATABASE = "tweetdata"
     DEFAULT_COLLECTION = "tweets"
@@ -26,9 +24,9 @@ class DataStore:
         res = [cursor.next() for i in range(n)]
         return res
 
-    def close(self):
-        self.client.close()
-
     def write(self, data):
         """ writes data to db """
         self.collection.insert(data)
+    
+    def close(self):
+        self.client.close()

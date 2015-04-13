@@ -1,4 +1,4 @@
-from mongoreader import MongoReader
+from atmospheres.db.datastore  import DataStore
 import nltk, random, re, string
 from nltk.classify import apply_features
 from nltk.stem.porter import *
@@ -13,7 +13,7 @@ TEST_SET_PROPORTION = .1
 class SentiClassifier():
 
     def __init__(self):
-        self.reader = MongoReader()
+        self.db = DataStore()
         self.regex = re.compile('[%s]' % re.escape(string.punctuation))
         self.stemmer = PorterStemmer()
         self.stop_words = set(stopwords.words("english"))
@@ -25,8 +25,8 @@ class SentiClassifier():
         
         print "Querying DB"
         # read samples from DB
-        posTweets = self.reader.get_N_results("\\:\\)",num_samples)
-        negTweets = self.reader.get_N_results("\\:\\(",num_samples)
+        posTweets = self.db.get_N_results("\\:\\)",num_samples)
+        negTweets = self.db.get_N_results("\\:\\(",num_samples)
         
         print "Query Returned"
         # read query results into memory

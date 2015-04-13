@@ -2,7 +2,7 @@ from pymongo import MongoClient
 
 
 
-class MongoReader:
+class DataStore:
     DEFAULT_DATABASE = "tweetdata"
     DEFAULT_COLLECTION = "tweets"
 
@@ -32,15 +32,3 @@ class MongoReader:
     def write(self, data):
         """ writes data to db """
         self.collection.insert(data)
-
-
-
-if __name__ == "__main__":
-    
-    mongo = MongoReader()
-    t = mongo.get_N_results("\\:\\)",10)
-    for r in t:
-        print r["text"]
-
-
-    mongo.close()

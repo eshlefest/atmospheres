@@ -3,11 +3,11 @@ import os
 from flask import render_template, request, send_from_directory
 
 from atmospheres import app
-from atmospheres.ingestion.mongoreader import MongoReader
+from atmospheres.db.datastore import DataStore
 
 
 
-app.mongoreader = MongoReader()
+app.db = DataStore()
 
 @app.route('/')
 def home():
@@ -27,7 +27,7 @@ def store_post():
     # to application/json.
     data = { "mypostdata": request.json }  # { 'mypostdata': { 'fname': 'kumari', 'lname': 'sweta'}}
     print data
-    app.mongoreader.write(data)
+    app.db.write(data)
     return 'Thank you for the data'
 
 

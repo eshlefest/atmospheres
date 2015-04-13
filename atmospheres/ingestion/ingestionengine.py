@@ -1,6 +1,5 @@
 from tweetreader import TweetStreamReader
 from utils import get_twitter_properties, get_mongo_reader
-from mongoreader import MongoReader
 from senticlassifier import SentiClassifier
 from tweepy import OAuthHandler
 from tweepy import Stream

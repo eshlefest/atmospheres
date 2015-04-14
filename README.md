@@ -27,9 +27,7 @@ Machine should also have a running instance of Mongodb. To install  Mongo db fol
 Checkout the source code and run the following command from the root directory of project. It is recommended to install python
 virtual environment and then run the following command.
 
-Install pip
-
-``sudo easy_install pip``
+Install pip: ``sudo easy_install pip``
 
 ``pip install -e . -U``
 
@@ -45,7 +43,7 @@ download NLTK stopwords corpoora:
 update atmospheres/ingestion/properties.py with the twitter API keys
 * these keys are shared in a google document, if you cant access it, let Ryan know
 
-Make sure your MongoDB instance is running.  Execute the following command from project rood directory:
+Make sure your MongoDB instance is running.  Execute the following command from project root directory:
 ``atmospheres-ingest``
 After several seconds, you should see tweets and their sentiment printed to the console.  They are also being stored in the DB.
 

@@ -27,6 +27,10 @@ Machine should also have a running instance of Mongodb. To install  Mongo db fol
 Checkout the source code and run the following command from the root directory of project. It is recommended to install python
 virtual environment and then run the following command.
 
+Install pip
+
+``sudo easy_install pip``
+
 ``pip install -e . -U``
 
 download NLTK stopwords corpoora:

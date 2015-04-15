@@ -27,6 +27,14 @@ Machine should also have a running instance of Mongodb. To install  Mongo db fol
 Checkout the source code and run the following command from the root directory of project. It is recommended to install python
 virtual environment and then run the following command.
 
+if you dont have git installed:
+
+``sudo apt-get install git``
+
+clone the repo:
+
+``git clone https://github.com/eshlefest/atmospheres.git``
+
 Install pip: ``sudo easy_install pip``
 
 ``pip install -e . -U``

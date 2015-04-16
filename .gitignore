@@ -10,3 +10,7 @@ atmospheres/ingestion/properties*
 nose-1.3.4-py2.7.egg/*
 #Mongo db
 db/data/
+
+# Mac temp files
+.DS_Store
+

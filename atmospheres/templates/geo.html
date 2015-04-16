@@ -61,14 +61,14 @@ var map = new google.maps.Map(div.node(), {
           
 // Load the  data. When the data comes back, create an overlay.
 queue()
-    .defer(d3.json, "static/sf_zips.topo.json")
+    .defer(d3.json, "{{ url_for('static', filename='sf_zips.topo.json') }}")
     .await(ready);
 
 var svg, overlay;
 
 function ready(error, world) {
     var countries = topojson.feature(world, world.objects.geo).features,  
-        //land = topojson.feature(world, world.objects.land);
+        // land = topojson.feature(world, world.objects.land);
 
     overlay = new google.maps.OverlayView();
     overlay.onAdd = function() {

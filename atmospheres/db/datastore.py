@@ -1,8 +1,7 @@
 from pymongo import MongoClient
 
 
-
-class MongoReader:
+class DataStore(object):
     DEFAULT_DATABASE = "tweetdata"
     DEFAULT_COLLECTION = "tweets"
 
@@ -26,21 +25,13 @@ class MongoReader:
         res = [cursor.next() for i in range(n)]
         return res
 
-    def close(self):
-        self.client.close()
-
     def write(self, data):
         """ writes data to db """
         self.collection.insert(data)
 
+    def read(self):
+        """reads data from db"""
+        self.collection.find()  
 
-
-if __name__ == "__main__":
-    
-    mongo = MongoReader()
-    t = mongo.get_N_results("\\:\\)",10)
-    for r in t:
-        print r["text"]
-
-
-    mongo.close()
+    def close(self):
+        self.client.close()

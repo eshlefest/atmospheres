@@ -36,7 +36,8 @@ setup(
     },
     package_data={
     'static': 'atmospheres/static/*',
-    'resources': 'atmospheres/resources/*'
+    'resources': 'atmospheres/resources/*',
+    'templates': 'atmospheres/templates/*',
     }
     
 

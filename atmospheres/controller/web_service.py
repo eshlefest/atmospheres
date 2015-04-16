@@ -11,7 +11,10 @@ app.db = DataStore()
 
 @app.route('/')
 def home():
+    #import pdb; pdb.set_trace()
+    #result = render_template('geo.html') 
     return render_template('geo.html')
+    #return result
 
 @app.route('/static/sf_zips.topo.json')
 def get_topo_json():

@@ -28,7 +28,7 @@ html, body {
     left: 0px; 
 }
 
-#countries path {
+#zipcodes path {
   stroke-width: 1px;
   vector-effect: non-scaling-stroke;
     fill: none;
@@ -62,12 +62,12 @@ var map = new google.maps.Map(div.node(), {
 // Load the  data. When the data comes back, create an overlay.
 queue()
     .defer(d3.json, "{{ url_for('static', filename='sf_zips.topo.json') }}")
-    .await(ready);
+    .await(ready)
 
 var svg, overlay;
 
 function ready(error, world) {
-    var countries = topojson.feature(world, world.objects.geo).features,  
+    var zipcodes = topojson.feature(world, world.objects.geo).features,  
         // land = topojson.feature(world, world.objects.land);
 
     overlay = new google.maps.OverlayView();
@@ -83,17 +83,34 @@ function ready(error, world) {
                 .attr('height', height);
             
         svg.append('g')
-            .attr('id','countries')
+            .attr('id','zipcodes')
             .selectAll('path')
-                .data(countries)
+                .data(zipcodes)
               .enter().append('path')
-                .attr('class','country');
+                .attr('class','zipcode')
+                .attr("id",function(d){return "zip_"+d.id})
         
         overlay.draw = redraw;
         google.maps.event.addListener(map, 'bounds_changed', redraw);
         google.maps.event.addListener(map, 'center_changed', redraw);
     };
     overlay.setMap(map);
+
+    //this is a hack!
+    setTimeout(updateColors, 100)
+}
+
+function updateColors()
+{
+    d3.select("#zip_94105")
+        .style('fill', 'red');
+
+    d3.select("#zip_94111")
+        .style('fill', 'aquamarine');
+
+    d3.select("#zip_94132")
+        .style('fill', 'purple');
+
 }
 
 function redraw() {
@@ -112,7 +129,7 @@ function redraw() {
     var p1 = projection([ne.lng(),ne.lat()]),
         p2 = projection([sw.lng(),sw.lat()]);
     
-    svg.select('#countries').attr('transform', 
+    svg.select('#zipcodes').attr('transform', 
         'scale('+width/(p1[0]-p2[0])+','+height/(p2[1]-p1[1])+')'+
         'translate('+(-p2[0])+','+(-p1[1])+') ');
               

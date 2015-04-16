@@ -23,6 +23,13 @@ def get_topo_json():
         'sf_zips.topo.json',
     )
 
+@app.route('/data/sentiments')
+def get_live_sentiments_json():
+   return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'demo_sentiments.json',
+    )
+
 @app.route('/postdata/', methods=['POST'])
 def store_post():
     # This method is expecting json object. When client sends the

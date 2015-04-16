@@ -1,0 +1,95 @@
+{
+    "type":"SentimentList",
+    "zipcodes":[
+
+        {
+            "zipcode":"94105",
+            "sentiment":".5"
+        },
+        {
+            "zipcode":"94107",
+            "sentiment":".2"
+        },
+        {
+            "zipcode":"94108",
+            "sentiment":"-.1"
+        },
+        {
+            "zipcode":"94109",
+            "sentiment":"-.5"
+        },
+        {
+            "zipcode":"94112",
+            "sentiment":"-.6"
+        },
+        {
+            "zipcode":"94114",
+            "sentiment":".7"
+        },
+        {
+            "zipcode":"94122",
+            "sentiment":"1"
+        },
+        {
+            "zipcode":"94124",
+            "sentiment":"-1"
+        },
+        {
+            "zipcode":"94127",
+            "sentiment":"-.9"
+        },
+        {
+            "zipcode":"94132",
+            "sentiment":"-.3"
+        },
+        {
+            "zipcode":"94131",
+            "sentiment":".2"
+        },
+        {
+            "zipcode":"94133",
+            "sentiment":".1"
+        },
+        {
+            "zipcode":"94102",
+            "sentiment":".1"
+        },
+        {
+            "zipcode":"94111",
+            "sentiment":".3"
+        },
+        {
+            "zipcode":"94115",
+            "sentiment":".-.6"
+        },
+        {
+            "zipcode":"94116",
+            "sentiment":".8"
+        },
+        {
+            "zipcode":"94117",
+            "sentiment":".9"
+        },
+        {
+            "zipcode":"94118",
+            "sentiment":"-1"
+        },
+        {
+            "zipcode":"94121",
+            "sentiment":"-1"
+        },
+        {
+            "zipcode":"94123",
+            "sentiment":"-.9999"
+        },
+        {
+            "zipcode":"94134",
+            "sentiment":".555"
+        }
+
+
+
+    ]
+
+
+}

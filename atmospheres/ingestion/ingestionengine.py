@@ -56,7 +56,15 @@ def main():
     stream = Stream(auth, r)
 
     # filters for tweets in the bounding box described by san_francisco
-    stream.filter(locations=san_francisco)
+    while(True):
+        try:
+            stream.filter(locations=san_francisco)
+        except ReadTimeoutError as e:
+            print(" disconnected! \n reconnecting")
+            stream = Stream(auth, r)
+            stream.filter(locations=san_francisco)
+
+
 
 
 if __name__ == '__main__':

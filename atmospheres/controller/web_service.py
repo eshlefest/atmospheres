@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, request, send_from_directory
+from flask import render_template, request, send_from_directory, Response
 
 from atmospheres import app
 from atmospheres.db.datastore import DataStore
@@ -24,13 +24,14 @@ def home_old():
 
 @app.route('/geo.js')
 def geo_js():
-
-    return render_template('geo.js')
+    r = render_template('geo.js')
+    return Response(r, mimetype='text/javascript')
 
 @app.route('/geo.css')
 def geo_css():
-
-    return render_template('geo.css')
+    r = render_template('geo.css')
+    return Response(r, mimetype='text/css')
+     
 
 @app.route('/angular.min.js')
 def geo_angular():

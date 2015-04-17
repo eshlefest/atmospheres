@@ -13,8 +13,39 @@ app.db = DataStore()
 def home():
     #import pdb; pdb.set_trace()
     #result = render_template('geo.html') 
-    return render_template('geo.html')
+    return render_template('geo_new.html')
     #return result
+
+@app.route('/old')
+def home_old():
+
+    return render_template('geo.html')
+
+
+@app.route('/geo.js')
+def geo_js():
+
+    return render_template('geo.js')
+
+@app.route('/geo.css')
+def geo_css():
+
+    return render_template('geo.css')
+
+@app.route('/angular.min.js')
+def geo_angular():
+
+    return render_template('angular.min.js')
+
+@app.route('/bootstrap.min.css')
+def geo_bootstrap():
+
+    return render_template('bootstrap.min.css')
+
+@app.route('/angular.min.js.map')
+def geo_angular_map():
+
+    return render_template('angular.min.js.map')
 
 @app.route('/static/sf_zips.topo.json')
 def get_topo_json():

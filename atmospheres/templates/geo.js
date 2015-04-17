@@ -1,6 +1,13 @@
-var app = angular.module('app', [])
+var app = angular.module('app', []);
 
-.directive('mapViz', function() {
+// app.directive('mapViz', function() {
+//      return {
+//          restrict: 'E',
+//          template: "<p>Hello World</p>"
+//      };
+// });
+
+ app.directive('mapViz', function() {
 
     return {
         restrict: 'E',
@@ -61,7 +68,7 @@ function ready(error, world) {
     overlay.setMap(map);
 
     //this is a hack!
-    setTimeout(updateColors, 100)
+    setTimeout(updateColors, 1000)
 }
 
 function updateColors()
@@ -74,6 +81,8 @@ function updateColors()
 
     d3.select("#zip_94132")
         .style('fill', 'purple');
+
+    alert("hello")
 
 }
 

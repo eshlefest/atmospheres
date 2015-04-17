@@ -30,7 +30,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'atmospheres-web-service = atmospheres.server.web_service:main',
+            'atmospheres-web-service = atmospheres.controller.web_service:main',
             'atmospheres-ingest = atmospheres.ingestion.ingestionengine:main'
         ]
     },

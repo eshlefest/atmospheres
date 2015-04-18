@@ -15,11 +15,13 @@ var app = angular.module('app', []);
 var width = 600,
     height = 400,
     div = d3.select('body')
-        .append('div')
+        .insert('div', 'footer')
         .attr('id','map')
         .style('width', width + 'px')
-        .style('height', height + 'px');
-            
+        .style('height', height + 'px')
+        .style('margin-left', 'auto')
+        .style('margin-right', 'auto');
+
 // Create the Google Map…
 var map = new google.maps.Map(div.node(), {
   zoom: 12,
@@ -29,7 +31,7 @@ var map = new google.maps.Map(div.node(), {
 });
 
 
-          
+
 // Load the  data. When the data comes back, create an overlay.
 queue()
     .defer(d3.json, "{{ url_for('static', filename='sf_zips.topo.json') }}")
@@ -38,12 +40,12 @@ queue()
 var svg, overlay;
 
 function ready(error, world) {
-    var zipcodes = topojson.feature(world, world.objects.geo).features,  
+    var zipcodes = topojson.feature(world, world.objects.geo).features,
         // land = topojson.feature(world, world.objects.land);
 
     overlay = new google.maps.OverlayView();
     overlay.onAdd = function() {
-        // create an SVG over top of it. 
+        // create an SVG over top of it.
         svg = d3.select(overlay.getPanes().overlayLayer)
             .append('div')
                 .attr('id','d3map')
@@ -52,7 +54,7 @@ function ready(error, world) {
             .append('svg')
                 .attr('width', width)
                 .attr('height', height);
-            
+
         svg.append('g')
             .attr('id','zipcodes')
             .selectAll('path')
@@ -60,7 +62,7 @@ function ready(error, world) {
               .enter().append('path')
                 .attr('class','zipcode')
                 .attr("id",function(d){return "zip_"+d.id})
-        
+
         overlay.draw = redraw;
         google.maps.event.addListener(map, 'bounds_changed', redraw);
         google.maps.event.addListener(map, 'center_changed', redraw);
@@ -81,13 +83,10 @@ function updateColors()
 
     d3.select("#zip_94132")
         .style('fill', 'purple');
-
-    alert("hello")
-
 }
 
 function redraw() {
-    
+
     var bounds = map.getBounds(),
         ne = bounds.getNorthEast(),
         sw = bounds.getSouthWest(),
@@ -98,14 +97,14 @@ function redraw() {
             .scale(1),
         path = d3.geo.path()
             .projection(projection);
-            
+
     var p1 = projection([ne.lng(),ne.lat()]),
         p2 = projection([sw.lng(),sw.lat()]);
-    
-    svg.select('#zipcodes').attr('transform', 
+
+    svg.select('#zipcodes').attr('transform',
         'scale('+width/(p1[0]-p2[0])+','+height/(p2[1]-p1[1])+')'+
         'translate('+(-p2[0])+','+(-p1[1])+') ');
-              
+
     svg.selectAll('path').attr('d', path);
     }
         }

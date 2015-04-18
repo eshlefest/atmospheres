@@ -110,3 +110,129 @@ function redraw() {
         }
     };
 });
+
+// the following code was shamelessly lifted from:
+// http://leafletjs.com/examples/choropleth.html
+
+app.directive('leafletMap', function() {
+    return {
+        restrict: 'E',
+        template: "<div id=\"map\"></div>",
+        link: function (scope, element, attrs) {
+            var geojson;
+            var info;
+            
+
+            var zip_data = $.getJSON("data/random", function(data){on_json_received(data)})
+
+
+            function on_json_received(data){
+                L.mapbox.accessToken = 'pk.eyJ1IjoicnlhbmVzaGxlbWFuIiwiYSI6IjNjV2FjaHcifQ.OnIpYYJr64Vnl4Y_buDzNw';
+                var map = L.mapbox.map('map', 'ryaneshleman.lonika6m')
+                .setView([37.760, -122.435], 13);
+                info = L.control();
+                
+
+                info.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                    this.update();
+                    return this._div;
+                };
+
+                // method that we will use to update the control based on feature properties passed
+                info.update = function (props) {
+                    this._div.innerHTML = '<h4>Zipcode Sentiment</h4>' +  (props ?
+                        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+                        : 'Hover over a neighborhood');
+                };
+
+                info.addTo(map);
+
+                var legend = L.control({position: 'bottomright'});
+
+                legend.onAdd = function (map) {
+
+                    var div = L.DomUtil.create('div', 'info legend'),
+                        grades = [-1, -.8, -.5, -.3, 0, .3, .5, .7,1],
+                        labels = [];
+
+                    // loop through our density intervals and generate a label with a colored square for each interval
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    }
+
+                    return div;
+                };
+
+                legend.addTo(map);
+
+
+
+                geojson = L.geoJson(data,{style: style,onEachFeature: onEachFeature}).addTo(map);
+                
+                
+            }
+
+            function getColor(d) {
+
+                return  d > .7 ? '#800026' :
+                        d > .5  ? '#BD0026' :
+                        d > .3  ? '#E31A1C' :
+                        d > 0  ? '#FC4E2A' :
+                        d > -.3   ? '#FD8D3C' :
+                        d > -.5   ? '#FEB24C' :
+                        d > -.7   ? '#FED976' :
+                                   '#FFEDA0';
+            }
+
+            function style(feature) {
+                return {
+                    fillColor: getColor(feature.sentiment),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                    };
+            }
+            function highlightFeature(e) {
+                var layer = e.target;
+
+                layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
+            });
+
+            if (!L.Browser.ie && !L.Browser.opera) {
+                layer.bringToFront();
+                }
+            info.update(layer.feature.properties);
+            }
+
+            function resetHighlight(e) {
+                geojson.resetStyle(e.target);
+            }
+
+            function onEachFeature(feature, layer) {
+                layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+                });
+
+                info.update();
+            }   
+        
+        }
+    };
+});
+
+
+
+
+
+
+

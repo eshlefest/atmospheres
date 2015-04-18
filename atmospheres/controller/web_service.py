@@ -4,6 +4,9 @@ from flask import render_template, request, send_from_directory, Response
 
 from atmospheres import app
 from atmospheres.db.datastore import DataStore
+from atmospheres.controller.geo_json import sf_geo_json
+import random
+import json
 
 
 
@@ -61,6 +64,15 @@ def get_live_sentiments_json():
         os.path.join(app.root_path, 'static'),
         'demo_sentiments.json',
     )
+
+@app.route('/data/random')
+def get_random_sentiments_json():
+    data = sf_geo_json
+
+    for i in sf_geo_json["features"]:
+        i["sentiment"] = random.random() * 2 - 1
+
+    return json.dumps(data)
 
 @app.route('/postdata/', methods=['POST'])
 def store_post():

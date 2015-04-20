@@ -6,6 +6,7 @@ from tweepy import Stream
 import json
 
 from atmospheres.models.tweet import Tweet
+from atmospheres.ingestion.utils import get_zipcode
 
 db = get_mongo_reader()
 classifier = SentiClassifier()
@@ -28,11 +29,16 @@ def on_tweet_received_callback(data):
     except:
         coords = None
 
+    if coords and coords[0] and coords[1]:
+        zipcode = get_zipcode(coords[0], coords[1])
+    else:
+        zipcode = None
+
     tweet = Tweet(
         None,  # Id 
         text, 
         sentiment,
-        None, 
+        zipcode,
         data["created_at"],
         coords[0] if coords else None,
         coords[1] if coords else None,

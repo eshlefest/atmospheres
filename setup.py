@@ -18,10 +18,11 @@ setup(
 	  		'nose>=1.0'
     ],
 	install_requires=[
-        'tweepy', 
-        'nltk',
-        'pymongo',
         'flask',
+        'nltk',
+        'pygeocoder',
+        'pymongo',
+        'tweepy', 
 	],
     tests_require=[
         'mock>=1.0.1',

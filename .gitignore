@@ -4,7 +4,7 @@ dist/
 bin/
 include/
 lib/
-db/data # Mongo db
+db/ # Mongo db
 .Python
 *.egg   # Python egg files
 *.eggs

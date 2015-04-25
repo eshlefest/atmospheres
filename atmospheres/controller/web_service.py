@@ -15,9 +15,18 @@ app.db = DataStore()
 @app.route('/')
 def home():
     #import pdb; pdb.set_trace()
-    #result = render_template('geo.html') 
+    #result = render_template('geo.html')
     return render_template('geo_new.html')
     #return result
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/about.css')
+def about_css():
+    r = render_template('about.css')
+    return Response(r, mimetype='text/css')
 
 @app.route('/old')
 def home_old():
@@ -34,7 +43,7 @@ def geo_js():
 def geo_css():
     r = render_template('geo.css')
     return Response(r, mimetype='text/css')
-     
+
 
 @app.route('/angular.min.js')
 def geo_angular():
@@ -77,7 +86,7 @@ def get_random_sentiments_json():
 @app.route('/postdata/', methods=['POST'])
 def store_post():
     # This method is expecting json object. When client sends the
-    # json data, it should also sets the request header Content-Type 
+    # json data, it should also sets the request header Content-Type
     # to application/json.
     data = { "mypostdata": request.json }  # { 'mypostdata': { 'fname': 'kumari', 'lname': 'sweta'}}
     print data

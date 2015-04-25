@@ -31,10 +31,10 @@ def on_tweet_received_callback(data):
 
     zipcode = None
     
-    # if coords and coords[0] and coords[1]:
-    #     #zipcode = get_zipcode(coords[0], coords[1])
-    # else:
-    #     zipcode = None
+     if coords and coords[0] and coords[1]:
+         zipcode = get_zipcode(coords[1], coords[0])
+     else:
+         zipcode = None
 
     tweet = Tweet(
         None,  # Id 

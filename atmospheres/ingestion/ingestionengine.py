@@ -47,7 +47,7 @@ def on_tweet_received_callback(data):
     )
 
     db.write(tweet.to_dict())
-    print "%10s: %s"%(sentiment,text)
+    print "%s %10s: %s"%(zipcode, sentiment,text)
 
 
 def main():

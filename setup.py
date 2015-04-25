@@ -20,7 +20,7 @@ setup(
 	install_requires=[
         'flask',
         'nltk',
-        'pygeocoder',
+        'shapely',
         'pymongo',
         'tweepy', 
 	],

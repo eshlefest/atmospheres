@@ -1,9 +1,24 @@
 import pickle
 from os import path
-from pygeocoder import Geocoder
+from shapely.geometry import Polygon, Point
 
 from atmospheres.db.datastore import DataStore
 from properties import *
+from atmospheres.controller.geo_json import sf_geo_json
+
+
+# this will be a list of (Polygon,zip_code) tuples
+zip_polygons = []
+
+# populate shapely polygon list
+for feature in sf_geo_json["features"]:
+    polygon = Polygon(feature["geometry"]["geometries"][0]["coordinates"][0])
+    zip_code = feature["id"]
+    zip_polygons.append((polygon,zip_code))
+
+
+
+
 
 
 def get_mongo_reader():
@@ -46,16 +61,28 @@ def unpickle_object(filename):
     f.close()
     return obj  
 
-def get_zipcode(latitude, longitude):
+def get_zipcode(lon,lat):
     """
-    This method uses pygeocoder to fetch the respective zipcode by reverse geocoding
+    returns the coresponding zipcode from the goJSON data, else 'unknown'
     """
-    result = Geocoder.reverse_geocode(latitude, longitude)
-    # Return none if the result is empty or None.
-    if result:
-        return result.postal_code
-    else:    
-        return None 
+    point = Point(lon,lat)
+
+    for p in zip_polygons:
+        if p[0].contains(point):
+            return p[1]
+
+    
+
+#def get_zipcode(latitude, longitude):
+#    """
+#    This method uses pygeocoder to fetch the respective zipcode by reverse geocoding
+#    """
+#    result = Geocoder.reverse_geocode(latitude, longitude)
+#    # Return none if the result is empty or None.
+#    if result:
+#       return result.postal_code
+#    else:    
+#        return None 
 
 
 

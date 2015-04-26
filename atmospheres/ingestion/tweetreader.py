@@ -35,6 +35,7 @@ if __name__ == '__main__':
     #This handles Twitter authetification and the connection to Twitter Streaming API
     l = TweetStreamReader()
     auth = OAuthHandler(twitter_properties["consumer_key"], twitter_properties["consumer_secret"])
+
     auth.set_access_token(twitter_properties["access_token"], twitter_properties["access_token_secret"])
     stream = Stream(auth, l)
 

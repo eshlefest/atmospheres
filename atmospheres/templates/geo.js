@@ -220,10 +220,23 @@ app.directive('leafletMap', function() {
             function onEachFeature(feature, layer) {
                 layer.on({
                 mouseover: highlightFeature,
-                mouseout: resetHighlight
+                mouseout: resetHighlight,
+                click: regionClicked
                 });
 
                 info.update();
+            }
+
+            function regionClicked(e)
+            {
+                var zipcode = e.target.feature.id
+                $.ajax({ 
+                    type: "GET",
+                    url: "/data/zipcode/"+zipcode,
+                    success: function(data){        
+                    alert(data);
+                    }
+                });
             }   
         
         }

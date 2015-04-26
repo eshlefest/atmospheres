@@ -30,7 +30,6 @@ def about_css():
 
 @app.route('/old')
 def home_old():
-
     return render_template('geo.html')
 
 
@@ -92,6 +91,13 @@ def store_post():
     print data
     app.db.write(data)
     return 'Thank you for the data'
+
+# place holder for later
+@app.route('/data/zipcode/<zipcode>')
+def get_graph_url(zipcode):
+    return "https://plot.ly/~ryaneshleman/46.embed"
+
+
 
 
 def main():

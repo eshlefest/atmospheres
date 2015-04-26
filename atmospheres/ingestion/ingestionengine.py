@@ -60,6 +60,7 @@ def main():
     r.set_data_callback(on_tweet_received_callback)
 
     auth = OAuthHandler(twitter_properties["consumer_key"], twitter_properties["consumer_secret"])
+    auth.secure = True
     auth.set_access_token(twitter_properties["access_token"], twitter_properties["access_token_secret"])
     stream = Stream(auth, r)
 

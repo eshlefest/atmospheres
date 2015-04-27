@@ -22,6 +22,7 @@ setup(
         'nltk',
         'shapely',
         'pymongo',
+        'python-dateutil',
         'tweepy', 
 	],
     tests_require=[

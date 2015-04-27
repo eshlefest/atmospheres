@@ -1,3 +1,4 @@
+from dateutil import parser
 from tweetreader import TweetStreamReader
 from utils import get_twitter_properties, get_mongo_reader
 from senticlassifier import SentiClassifier
@@ -19,7 +20,8 @@ san_francisco = [-122.529439, 37.688995, -122.358464, 37.839899]
 def on_tweet_received_callback(data):
     """ this function will be set as the callback function for the tweet reader, will be passed
         the tweet as an argument.
-         it classifies the text, then saves the necessary info to the db"""
+        it classifies the text, then saves the necessary info to the db
+    """
     data = json.loads(data)
     text = data["text"]
     sentiment = classifier.classify(text)
@@ -29,7 +31,6 @@ def on_tweet_received_callback(data):
     except:
         coords = None
 
-    zipcode = None
     
     if coords and coords[0] and coords[1]:
         zipcode = get_zipcode(coords[1], coords[0])
@@ -41,7 +42,7 @@ def on_tweet_received_callback(data):
         text, 
         sentiment,
         zipcode,
-        data["created_at"],
+        parser.parse(data["created_at"]),
         coords[0] if coords else None,
         coords[1] if coords else None,
     )

@@ -3,12 +3,12 @@ This class is model class. Basically used to store data.
 """
 class Tweet(object):
 
-	def __init__(self, id, tweet_text, sentiment, zipcode, created, latitude, longitude):
+	def __init__(self, id, tweet_text, sentiment, zipcode, created_at, latitude, longitude):
 		self.id = id
 		self.sentiment = sentiment     # only postive and negative
 		self.zipcode = zipcode
 		self.tweet_text = tweet_text
-		self.created = created
+		self.created_at = created_at
 		self.latitude = latitude
 		self.longitude = longitude
 
@@ -22,7 +22,7 @@ class Tweet(object):
 			dct.get("tweet_text"),
 			dct.get("sentiment"),
 			dct.get("zipcode"),
-			dct.get("created"),
+			dct.get("created_at"),
 			dct.get("latitude"),
 			dct.get("longitude"),
 		)
@@ -36,7 +36,7 @@ class Tweet(object):
 			"tweet_text": self.tweet_text, 
 			"sentiment": self.sentiment,
 			"zipcode": self.zipcode,
-			"created": self.created,
+			"created_at": self.created_at,
 			"latitude": self.latitude,
 			"longitude": self.longitude,
 		}	

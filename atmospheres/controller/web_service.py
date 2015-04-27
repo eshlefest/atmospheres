@@ -15,7 +15,7 @@ app.db = DataStore()
 @app.route('/')
 def home():
     #import pdb; pdb.set_trace()
-    #result = render_template('geo.html')
+    #result = render_template('geo_new.html') 
     return render_template('geo_new.html')
     #return result
 

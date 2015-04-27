@@ -2,7 +2,7 @@ from pymongo import MongoClient
 
 
 class DataStore(object):
-    DEFAULT_DATABASE = "tweetdata"
+    DEFAULT_DATABASE = "CSC868"
     DEFAULT_COLLECTION = "tweets"
 
     def __init__(self, database=DEFAULT_DATABASE,collection=DEFAULT_COLLECTION):
@@ -33,5 +33,11 @@ class DataStore(object):
         """reads data from db"""
         self.collection.find()  
 
+    def get_sentiment_count(self, sentimen_type, zipcode):  
+        sentiment_count = self.collection.find( { 
+                                                    "zipcode" : zipcode, 
+                                                    "sentiment" : sentimen_type,
+                                                }).count()
+        return sentiment_count
     def close(self):
         self.client.close()

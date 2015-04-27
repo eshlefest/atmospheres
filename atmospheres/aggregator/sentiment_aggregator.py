@@ -1,7 +1,6 @@
 from bson.code import Code
 from atmospheres.db.datastore import DataStore
-from atmospheres.resources import Sentiment
-from atmospheres.resources import Sentiments
+from atmospheres.resources.sentiment import Sentiment, Sentiments
 
 
 class SentimenetAgrregator(object):
@@ -28,7 +27,7 @@ class SentimenetAgrregator(object):
 		This method returns the aggregated list of sentiments for provided zipcodes.
 		"""
 		zipcode_sentiment_map =  {}
-		for zipcode in zipcodes
+		for zipcode in zipcodes:
 			positive_sentiment_count = self.db.find( { "zipcode" : zipcode, 
 									  "sentiment" : postive,
 						      		  "created" : {"$gt": start_time, "$lt" : end_time} } ).count()
@@ -60,19 +59,18 @@ class SentimenetAgrregator(object):
 		zipped = zip(total_sentiment, total_zipcode)
 		for item in zipped:
 			result = item[0]["count"]*100/item[1]["count"]
-			if result > percentage
+			if result > percentage:
 				zipcode_sentiment_list.append(zipcode)
 
 		return zipcode_sentiment_list
 
 
-	def get_sentiment_count(sentimen_type, zipcode):	
+	def get_sentiment_count(self, sentimen_type, zipcode):	
 		"""
 		This method returns the number of sentiment count for particular type of sentiment for a specific zipcode
 		"""
-		sentiment_count = self.db.find( { "zipcode" : zipcode, 
-									   	  "sentiment" : sentimen_type,
-						      		      } ).count()
+		sentiment_count = self.db.get_sentiment_count(sentimen_type, zipcode)
+		
 		return sentiment_count
 
 

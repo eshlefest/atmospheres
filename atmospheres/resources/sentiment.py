@@ -1,10 +1,7 @@
-from enum import Enum
-
-
 """
 This module contains resource classes for aggregated sentiment.
 """
-class SentimentType(Enum):
+class SentimentType(object):
 	positive = "positive"
 	negative = "negative"
 

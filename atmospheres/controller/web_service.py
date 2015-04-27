@@ -5,6 +5,8 @@ from flask import render_template, request, send_from_directory, Response
 from atmospheres import app
 from atmospheres.db.datastore import DataStore
 from atmospheres.controller.geo_json import sf_geo_json
+from atmospheres.aggregator.sentiment_aggregator import SentimenetAgrregator
+from atmospheres.resources.sentiment import SentimentType
 import random
 import json
 
@@ -76,11 +78,20 @@ def get_live_sentiments_json():
 @app.route('/data/random')
 def get_random_sentiments_json():
     data = sf_geo_json
+    aggregator = SentimenetAgrregator(app)
+    for item in sf_geo_json["features"]:
+        zipcode = item['id']
+        positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode)
 
-    for i in sf_geo_json["features"]:
-        i["sentiment"] = random.random() * 2 - 1
+        negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode)
 
-    return json.dumps(data)
+        if positive_count == 0 and negative_count == 0:
+            item["sentiment"] = 1
+        else:
+            item["sentiment"] = (positive_count - negative_count) / (positive_count + negative_count)
+            
+    aggregated_result = json.dumps(data)
+    return aggregated_result
 
 @app.route('/postdata/', methods=['POST'])
 def store_post():

@@ -14,6 +14,7 @@ import json
 
 
 app.db = DataStore()
+aggregator = SentimenetAgrregator(app)
 
 @app.route('/')
 def home():
@@ -112,6 +113,9 @@ def get_graph_url(zipcode):
 
 
 def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
+    """
+
+    """
     now = datetime.now()
     start = now - timedelta(days=range_of_days)
     datetimes = []
@@ -121,6 +125,34 @@ def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
         datetimes.append(start)
 
     sentiments = [random.random() for i in datetimes]
+
+    return datetimes,sentiments
+
+
+def getTimeSeries(zipcode,range_of_days,time_delta_hours):
+    """
+
+    """
+    now = datetime.now()
+    start = now - timedelta(days=range_of_days)
+    datetimes = []
+    sentiments = []
+
+    while start < now:
+        start += timedelta(hours=time_delta_hours)
+        datetimes.append(start)
+
+    
+
+    for i in range(len(datetimes)-1):
+        positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode, datetimes[i],datetimes[i+1])
+        negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode, datetimes[i],datetimes[i+1])
+        if positive_count == 0 and negative_count == 0:
+            sentiment = 0
+        else:
+            sentiment = float(positive_count - negative_count) / float(positive_count + negative_count)
+
+        sentiments.append(sentiment)
 
     return datetimes,sentiments
 

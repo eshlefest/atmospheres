@@ -114,7 +114,7 @@ def get_graph_url(zipcode):
 
 def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
     """
-
+        this generates a random time series for testing
     """
     now = datetime.now()
     start = now - timedelta(days=range_of_days)
@@ -131,19 +131,23 @@ def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
 
 def getTimeSeries(zipcode,range_of_days,time_delta_hours):
     """
-
+        generates a timeseries for a given zipcode from [now - range_of_days] to now
+        at intervals of time_delta_hours
     """
     now = datetime.now()
     start = now - timedelta(days=range_of_days)
     datetimes = []
     sentiments = []
 
+    # generates time intervals
     while start < now:
         start += timedelta(hours=time_delta_hours)
         datetimes.append(start)
 
     
-
+    # for each interval, get positive and negative tweets
+    # sentiment = positive - negative / (positive + negative)
+    # store sentiment in sentiments array
     for i in range(len(datetimes)-1):
         positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode, datetimes[i],datetimes[i+1])
         negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode, datetimes[i],datetimes[i+1])

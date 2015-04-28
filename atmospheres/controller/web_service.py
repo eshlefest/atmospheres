@@ -111,6 +111,20 @@ def get_graph_url(zipcode):
 
 
 
+def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
+    now = datetime.now()
+    start = now - timedelta(days=range_of_days)
+    datetimes = []
+
+    while start < now:
+        start += timedelta(hours=time_delta_hours)
+        datetimes.append(start)
+
+    sentiments = [random.random() for i in datetimes]
+
+    return datetimes,sentiments
+
+
 
 def main():
     app.run(debug=True)

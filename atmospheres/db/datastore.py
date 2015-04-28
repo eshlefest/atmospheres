@@ -33,11 +33,27 @@ class DataStore(object):
         """reads data from db"""
         self.collection.find()  
 
-    def get_sentiment_count(self, sentimen_type, zipcode):  
-        sentiment_count = self.collection.find( { 
-                                                    "zipcode" : zipcode, 
-                                                    "sentiment" : sentimen_type,
-                                                }).count()
+    def get_sentiment_count(self, sentiment_type, zipcode, start_time, end_time): 
+        condition = { 
+                      'sentiment' : sentiment_type,
+                      'zipcode' : zipcode,
+                      'created_at' : {'$gt': start_time, '$lt' : end_time},
+                    }
+        sentiment_count = self.collection.find(condition).count()
+
+        #for item in sentiment_count:
+            #print item
         return sentiment_count
+
     def close(self):
         self.client.close()
+
+# def main():
+#     db = DataStore()
+#     import datetime;
+#     import pdb; pdb.set_trace()
+#     result = db.get_sentiment_count("positive", "94105", datetime.datetime.now() - datetime.timedelta(days=10), datetime.datetime.now())
+#     print result
+
+if __name__ == "__main__":
+    main()

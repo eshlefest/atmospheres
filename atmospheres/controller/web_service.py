@@ -7,6 +7,7 @@ from atmospheres.db.datastore import DataStore
 from atmospheres.controller.geo_json import sf_geo_json
 from atmospheres.aggregator.sentiment_aggregator import SentimenetAgrregator
 from atmospheres.resources.sentiment import SentimentType
+from datetime import timedelta, datetime
 import random
 import json
 
@@ -81,15 +82,15 @@ def get_random_sentiments_json():
     aggregator = SentimenetAgrregator(app)
     for item in sf_geo_json["features"]:
         zipcode = item['id']
-        positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode)
+        positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode, datetime.now() - timedelta(days=10) ,datetime.now())
 
-        negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode)
+        negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode, datetime.now() - timedelta(days=10) ,datetime.now())
 
         if positive_count == 0 and negative_count == 0:
             item["sentiment"] = 1
         else:
-            item["sentiment"] = (positive_count - negative_count) / (positive_count + negative_count)
-            
+            item["sentiment"] = float(positive_count - negative_count) / float(positive_count + negative_count)
+        print "zipcode:" + zipcode + "positive" + str(positive_count), str(negative_count),  str(item["sentiment"])   
     aggregated_result = json.dumps(data)
     return aggregated_result
 

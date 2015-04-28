@@ -16,10 +16,10 @@ class SentimenetAgrregator(object):
 		"""
 		postive_sentiment_count = self.db.find( { "zipcode" : zipcode, 
 									  "sentiment" : postive,
-						      		  "created" : {"$gt": start_time, "$lt" : end_time} } ).count()
+						      		  "created_at" : {"$gt": start_time, "$lt" : end_time} } ).count()
 		negative_sentiment_count = self.db.find( { "zipcode" : zipcode, 
 									  "sentiment" : negative,
-						      		  "created" : {"$gt": start_time, "$lt" : end_time} } ).count()
+						      		  "created_at" : {"$gt": start_time, "$lt" : end_time} } ).count()
 		return Sentiment(zipcode, postive_zip_count, negative_zip_count, start_time, end_time)
 
 	def get_sentiments(self, zipcodes, start_time, end_time):
@@ -30,10 +30,10 @@ class SentimenetAgrregator(object):
 		for zipcode in zipcodes:
 			positive_sentiment_count = self.db.find( { "zipcode" : zipcode, 
 									  "sentiment" : postive,
-						      		  "created" : {"$gt": start_time, "$lt" : end_time} } ).count()
+						      		  "created_at" : {"$gt": start_time, "$lt" : end_time} } ).count()
 			negative_sentiment_count = self.db.find( { "zipcode" : zipcode, 
 									  "sentiment" : negative,
-						      		  "created" : {"$gt": start_time, "$lt" : end_time} } ).count()
+						      		  "created_at" : {"$gt": start_time, "$lt" : end_time} } ).count()
 			zipcode_sentiment_map[zipcode] = {
 				"positive_sentiment_count": positive_sentiment_count,
 				"negative_sentiment_count": negative_sentiment_count,
@@ -65,11 +65,11 @@ class SentimenetAgrregator(object):
 		return zipcode_sentiment_list
 
 
-	def get_sentiment_count(self, sentimen_type, zipcode):	
+	def get_sentiment_count(self, sentimen_type, zipcode,start_time, end_time):	
 		"""
 		This method returns the number of sentiment count for particular type of sentiment for a specific zipcode
 		"""
-		sentiment_count = self.db.get_sentiment_count(sentimen_type, zipcode)
+		sentiment_count = self.db.get_sentiment_count(sentimen_type, zipcode, start_time, end_time)
 		
 		return sentiment_count
 

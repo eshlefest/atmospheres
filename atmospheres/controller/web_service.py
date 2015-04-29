@@ -162,6 +162,19 @@ def getTimeSeries(zipcode,range_of_days,time_delta_hours):
 
 
 
+def getPlotlyURL(x,y):
+    
+    data = Data([
+                 Scatter(
+                         x=x,
+                         y=y
+                         )
+                 ])
+    plot_url = py.plot(data, filename='atmospheres-time-series')
+
+
+
+
 def main():
     app.run(debug=True)
 

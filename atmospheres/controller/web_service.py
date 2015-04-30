@@ -11,7 +11,8 @@ from datetime import timedelta, datetime
 import random
 import json
 
-
+from plotly.graph_objs import *
+import plotly.plotly as py
 
 app.db = DataStore()
 aggregator = SentimenetAgrregator(app)
@@ -171,7 +172,7 @@ def getPlotlyURL(x,y):
                          )
                  ])
     plot_url = py.plot(data, filename='atmospheres-time-series')
-
+    return plot_url
 
 
 

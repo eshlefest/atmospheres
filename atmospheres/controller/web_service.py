@@ -197,7 +197,40 @@ def getPlotlyTimeSeriesURL(x,y):
     plot_url = py.plot(fig, filename='atmospheres-time-series')
     return plot_url
 
-
+#This inputs data and spits out a bar graph
+def getPlotlyZipSentimentSeriesURL(x,y):
+    # x coordinates are Zipcodes
+    # y coordinates are sentiments
+    data = Data([
+                 Bar(
+                         x=x,
+                         y=y
+                         name='Sentiment Value by Zip'
+                         )
+                 ])
+        
+                 #adding legends, coordinate names, and titles to graph
+                 layout = Layout(
+                                 title = 'Sentiments vs Zipcodes',
+                                 xaxis = XAxis(
+                                               title = 'Zipcodes',
+                                               titlefont = Font(
+                                                                family = 'Courier New, monospace',
+                                                                size = 18
+                                                                )
+                                               ),
+                                 yaxis = YAxis(
+                                               title = 'Sentiments',
+                                               titlefont = Font(
+                                                                family = 'Courier New, monospace',
+                                                                size = 18
+                                                                )
+                                               )
+                                 )
+                 
+                 fig = Figure(data=data, layout=layout)
+                 plot_url = py.plot(fig, filename='atmospheres-Zip-Sentiment-series')
+                 return plot_url
 
 def main():
     app.run(debug=True)

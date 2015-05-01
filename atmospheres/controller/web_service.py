@@ -162,16 +162,39 @@ def getTimeSeries(zipcode,range_of_days,time_delta_hours):
     return datetimes,sentiments
 
 
-
-def getPlotlyURL(x,y):
-    
+#This inputs data and spits out a scatter graph
+def getPlotlyTimeSeriesURL(x,y):
+    # x coordinates are datetimes
+    # y coordinates are sentiments
     data = Data([
                  Scatter(
                          x=x,
                          y=y
+			 name='Average Sentiment Value'
                          )
                  ])
-    plot_url = py.plot(data, filename='atmospheres-time-series')
+
+    #adding legends, coordinate names, and titles to graph
+    layout = Layout(
+	title = 'Sentiments vs Dates',
+	xaxis = XAxis(
+		title = 'Dates',
+		titlefont = Font(
+			family = 'Courier New, monospace',
+			size = 18
+		)
+	),
+	yaxis = YAxis(
+		title = 'Sentiments',
+		titlefont = Font(
+			family = 'Courier New, monospace',
+			size = 18
+		)
+	)
+    )
+
+    fig = Figure(data=data, layout=layout)
+    plot_url = py.plot(fig, filename='atmospheres-time-series')
     return plot_url
 
 

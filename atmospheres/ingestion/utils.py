@@ -1,10 +1,13 @@
 import pickle
 from os import path
 from shapely.geometry import Polygon, Point
+import datetime
 
 from atmospheres.db.datastore import DataStore
 from properties import *
 from atmospheres.controller.geo_json import sf_geo_json
+import random
+from atmospheres.models.tweet import Tweet
 
 
 # this will be a list of (Polygon,zip_code) tuples
@@ -70,6 +73,32 @@ def get_zipcode(lon,lat):
     for p in zip_polygons:
         if p[0].contains(point):
             return p[1]
+
+def add_random_tweets_to_db(num_tweets,date_range):
+    hour_range = date_range * 24
+    db = get_mongo_reader()
+
+    for i in range(num_tweets):
+        lat = random.uniform(37.688995,37.839899)
+        lon = random.uniform(-122.529439,-122.358464)
+
+        sentiment = "positive" if random.random() > .5 else "negative"
+        hours_delta = random.uniform(0,hour_range)
+        date = datetime.datetime.now() - datetime.timedelta(hours=hours_delta)
+        
+        tweet = Tweet(
+            None,  # Id 
+            "random_tweet %d"%i, 
+            sentiment,
+            get_zipcode(lon,lat),
+            date,
+            lat,
+            lon,
+        )
+        db.write(tweet.to_dict())
+        
+
+
 
     
 

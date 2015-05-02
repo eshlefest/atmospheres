@@ -78,7 +78,7 @@ def get_live_sentiments_json():
         'demo_sentiments.json',
     )
 
-@app.route('/data/random')
+@app.route('/data/live')
 def get_random_sentiments_json():
     data = sf_geo_json
     aggregator = SentimenetAgrregator(app)
@@ -109,7 +109,11 @@ def store_post():
 # place holder for later
 @app.route('/data/zipcode/<zipcode>')
 def get_graph_url(zipcode):
-    return "https://plot.ly/~ryaneshleman/46.embed"
+    x,y = getTimeSeries(zipcode,10,6)
+
+    filename = "Sentiment-Graph-%s  %s"%(zipcode,datetime.now().ctime())
+    url = getPlotlyTimeSeriesURL(x,y,filename)
+    return url
 
 
 
@@ -139,6 +143,7 @@ def getTimeSeries(zipcode,range_of_days,time_delta_hours):
     start = now - timedelta(days=range_of_days)
     datetimes = []
     sentiments = []
+    zipcode = str(zipcode)
 
     # generates time intervals
     while start < now:
@@ -163,7 +168,7 @@ def getTimeSeries(zipcode,range_of_days,time_delta_hours):
 
 
 #This inputs data and spits out a scatter graph
-def getPlotlyTimeSeriesURL(x,y):
+def getPlotlyTimeSeriesURL(x,y,filename):
     # x coordinates are datetimes
     # y coordinates are sentiments
     data = Data([
@@ -176,7 +181,7 @@ def getPlotlyTimeSeriesURL(x,y):
 
     #adding legends, coordinate names, and titles to graph
     layout = Layout(
-	title = 'Sentiments vs Dates',
+	title = filename,
 	xaxis = XAxis(
 		title = 'Dates',
 		titlefont = Font(
@@ -194,7 +199,7 @@ def getPlotlyTimeSeriesURL(x,y):
     )
 
     fig = Figure(data=data, layout=layout)
-    plot_url = py.plot(fig, filename='atmospheres-time-series')
+    plot_url = py.plot(fig, filename=filename, auto_open=False)
     return plot_url
 
 #This inputs data and spits out a bar graph
@@ -221,7 +226,7 @@ def getPlotlyZipSentimentSeriesURL(x,y):
                                 size = 18)))
                  
     fig = Figure(data=data, layout=layout)
-    plot_url = py.plot(fig, filename='atmospheres-Zip-Sentiment-series')
+    plot_url = py.plot(fig, filename='atmospheres-Zip-Sentiment-series',auto_open=False)
     return plot_url
 
 def main():

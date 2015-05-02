@@ -1,14 +1,20 @@
 from bson.code import Code
 from atmospheres.db.datastore import DataStore
 from atmospheres.resources.sentiment import Sentiment, Sentiments
+from atmospheres.ingestion.utils import get_mongo_reader
 
 
 class SentimenetAgrregator(object):
 	"""
 	This class exposes various methods to return aggregated data from datastore
 	"""
-	def __init__(self, app):
-		self.db = app.db
+	def __init__(self, app=None):
+		if app:
+			self.db = app.db
+		else:
+			self.db = get_mongo_reader()
+
+		
 
 	def get_sentiment(self, zipcode, start_time, end_time):
 		"""

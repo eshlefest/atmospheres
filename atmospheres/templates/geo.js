@@ -123,7 +123,7 @@ app.directive('leafletMap', function() {
             var info;
             
 
-            var zip_data = $.getJSON("data/random", function(data){on_json_received(data)})
+            var zip_data = $.getJSON("data/live", function(data){on_json_received(data)})
 
 
             function on_json_received(data){

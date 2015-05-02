@@ -69,7 +69,7 @@ def main():
     while(True):
         try:
             stream.filter(locations=san_francisco)
-        except ReadTimeoutError as e:
+        except Exception as e:
             print(" disconnected! \n reconnecting")
             stream = Stream(auth, r)
             stream.filter(locations=san_francisco)

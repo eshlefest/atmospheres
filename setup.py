@@ -23,7 +23,8 @@ setup(
         'shapely',
         'pymongo',
         'python-dateutil',
-        'tweepy', 
+        'tweepy',
+        'plotly', 
 	],
     tests_require=[
         'mock>=1.0.1',

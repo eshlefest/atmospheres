@@ -169,7 +169,7 @@ def getPlotlyTimeSeriesURL(x,y):
     data = Data([
                  Scatter(
                          x=x,
-                         y=y
+                         y=y,
 			 name='Average Sentiment Value'
                          )
                  ])
@@ -204,7 +204,7 @@ def getPlotlyZipSentimentSeriesURL(x,y):
     data = Data([
                  Bar(
                          x=x,
-                         y=y
+                         y=y,
                          name='Sentiment Value by Zip'
                          )
                  ])

@@ -140,10 +140,11 @@ app.directive('leafletMap', function() {
                 };
 
                 // method that we will use to update the control based on feature properties passed
-                info.update = function (props) {
-                    this._div.innerHTML = '<h4>Zipcode Sentiment</h4>' +  (props ?
-                        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
-                        : 'Hover over a neighborhood');
+                info.update = function (e) {
+                    if(e)
+                        this._div.innerHTML = '<h4>'+e.target.feature.id+', Sentiment</h4>' +  e.target.feature.sentiment
+                    else
+                        this._div.innerHTML = '<h4>Zipcode, Sentiment</h4>' 
                 };
 
                 info.addTo(map);
@@ -153,14 +154,14 @@ app.directive('leafletMap', function() {
                 legend.onAdd = function (map) {
 
                     var div = L.DomUtil.create('div', 'info legend'),
-                        grades = [-1, -.8, -.5, -.3, 0, .3, .5, .7,1],
+                        grades = [-1,-.7, -.5, -.3, 0, .3, .5, .7,1],
                         labels = [];
 
                     // loop through our density intervals and generate a label with a colored square for each interval
                     for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+</br>');
                     }
 
                     return div;
@@ -210,7 +211,7 @@ app.directive('leafletMap', function() {
             if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
                 }
-            info.update(layer.feature.properties);
+            info.update(e);
             }
 
             function resetHighlight(e) {

@@ -167,10 +167,10 @@ def getPlotlyTimeSeriesURL(x,y):
     # x coordinates are datetimes
     # y coordinates are sentiments
     data = Data([
-                 Scatter(
+                Scatter(
                          x=x,
                          y=y,
-			 name='Average Sentiment Value'
+            name='Average Sentiment Value'
                          )
                  ])
 
@@ -202,35 +202,27 @@ def getPlotlyZipSentimentSeriesURL(x,y):
     # x coordinates are Zipcodes
     # y coordinates are sentiments
     data = Data([
-                 Bar(
-                         x=x,
-                         y=y,
-                         name='Sentiment Value by Zip'
-                         )
-                 ])
-        
-                 #adding legends, coordinate names, and titles to graph
-                 layout = Layout(
-                                 title = 'Sentiments vs Zipcodes',
-                                 xaxis = XAxis(
-                                               title = 'Zipcodes',
-                                               titlefont = Font(
-                                                                family = 'Courier New, monospace',
-                                                                size = 18
-                                                                )
-                                               ),
-                                 yaxis = YAxis(
-                                               title = 'Sentiments',
-                                               titlefont = Font(
-                                                                family = 'Courier New, monospace',
-                                                                size = 18
-                                                                )
-                                               )
-                                 )
+                Bar(
+                    x=x,
+                    y=y,
+                    name='Sentiment Value by Zip')])
+                #adding legends, coordinate names, and titles to graph
+    layout = Layout(
+                    title = 'Sentiments vs Zipcodes',
+                    xaxis = XAxis(
+                        title = 'Zipcodes',
+                        titlefont = Font(
+                        family = 'Courier New, monospace',
+                        size = 18)),
+                    yaxis = YAxis(
+                            title = 'Sentiments',
+                            titlefont = Font(
+                                family = 'Courier New, monospace',
+                                size = 18)))
                  
-                 fig = Figure(data=data, layout=layout)
-                 plot_url = py.plot(fig, filename='atmospheres-Zip-Sentiment-series')
-                 return plot_url
+    fig = Figure(data=data, layout=layout)
+    plot_url = py.plot(fig, filename='atmospheres-Zip-Sentiment-series')
+    return plot_url
 
 def main():
     app.run(debug=True)

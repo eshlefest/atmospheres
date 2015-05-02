@@ -7,6 +7,7 @@ from atmospheres.db.datastore import DataStore
 from atmospheres.controller.geo_json import sf_geo_json
 from atmospheres.aggregator.sentiment_aggregator import SentimenetAgrregator
 from atmospheres.resources.sentiment import SentimentType
+from atmospheres.ingestion.utils import sf_zipcode_array,neighborhoods
 from datetime import timedelta, datetime
 import random
 import json
@@ -115,6 +116,38 @@ def get_graph_url(zipcode):
     url = getPlotlyTimeSeriesURL(x,y,filename)
     return url
 
+@app.route('/data/sf/timeseries')
+def get_sf_graph_url():
+    location = "sf"
+    x,y = getTimeSeries(location,10,6)
+
+    filename = "Sentiment-Graph-%s  %s"%(location,datetime.now().ctime())
+    url = getPlotlyTimeSeriesURL(x,y,filename)
+    return url
+
+@app.route('/data/sf/bar')
+def get_sf_bar_url():
+    y = []
+
+    now = datetime.now()
+    five_days_ago = now - timedelta(days=5)
+    for _zip in sf_zipcode_array:
+        positive_count =  aggregator.get_sentiment_count(SentimentType.positive, _zip, five_days_ago,now)
+        negative_count =  aggregator.get_sentiment_count(SentimentType.negative, _zip, five_days_ago,now)
+        if positive_count == 0 and negative_count == 0:
+            sentiment = 0
+        else:
+            sentiment = float(positive_count - negative_count) / float(positive_count + negative_count)
+
+        y.append(sentiment)
+
+    x = neighborhoods
+
+
+    filename = "Zipcode-Bar-Graph  %s"%(datetime.now().ctime())
+    url = getPlotlyZipSentimentSeriesURL(x,y,filename)
+    return url
+
 
 
 def getTimeSeries_tmp(zipcode,range_of_days,time_delta_hours):
@@ -143,7 +176,7 @@ def getTimeSeries(zipcode,range_of_days,time_delta_hours):
     start = now - timedelta(days=range_of_days)
     datetimes = []
     sentiments = []
-    zipcode = str(zipcode)
+    zipcode = str(zipcode) if zipcode != "sf" else None
 
     # generates time intervals
     while start < now:
@@ -203,7 +236,7 @@ def getPlotlyTimeSeriesURL(x,y,filename):
     return plot_url
 
 #This inputs data and spits out a bar graph
-def getPlotlyZipSentimentSeriesURL(x,y):
+def getPlotlyZipSentimentSeriesURL(x,y,filename):
     # x coordinates are Zipcodes
     # y coordinates are sentiments
     data = Data([
@@ -213,7 +246,7 @@ def getPlotlyZipSentimentSeriesURL(x,y):
                     name='Sentiment Value by Zip')])
                 #adding legends, coordinate names, and titles to graph
     layout = Layout(
-                    title = 'Sentiments vs Zipcodes',
+                    title = filename,
                     xaxis = XAxis(
                         title = 'Zipcodes',
                         titlefont = Font(

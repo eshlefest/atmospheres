@@ -34,15 +34,17 @@ class DataStore(object):
         self.collection.find()  
 
     def get_sentiment_count(self, sentiment_type, zipcode, start_time, end_time): 
+        
         condition = { 
-                      'sentiment' : sentiment_type,
-                      'zipcode' : zipcode,
-                      'created_at' : {'$gt': start_time, '$lt' : end_time},
+                          'sentiment' : sentiment_type,
+                          'created_at' : {'$gt': start_time, '$lt' : end_time},
                     }
+        
+        if(zipcode):
+            condition["zipcode"] = zipcode
+
         sentiment_count = self.collection.find(condition).count()
 
-        #for item in sentiment_count:
-            #print item
         return sentiment_count
 
     def close(self):

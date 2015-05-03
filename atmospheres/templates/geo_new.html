@@ -26,7 +26,9 @@
     <h5>
         This webapp gathers tweets in realtime and shows them on the map by neighborhoods, showing the emotional state of every neighborhood thanks to our sentiment algorithm.
     </h5>
-    <leaflet-map></leaflet-map>
+    <div ng-controller="MapController">
+        <div map></div>
+    </div>
     <div class="about">
         <a href="/about" class="btn btn-default" role="button">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Our team

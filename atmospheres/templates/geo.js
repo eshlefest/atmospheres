@@ -111,12 +111,26 @@ function redraw() {
     };
 });
 
+/**
+ * controller to make a ajax call to a URL
+ */
+
+app.controller('MapController', ['$scope', '$http', function($scope, $http) {
+    $scope.data = '';
+    $scope.getData = function(URL) {
+        $http.get(URL).success(function(data) {
+            $scope.data = data;
+        })
+        return $scope.data;
+    }
+}]);
+
 // the following code was shamelessly lifted from:
 // http://leafletjs.com/examples/choropleth.html
 
-app.directive('leafletMap', function() {
+app.directive('map', function() {
     return {
-        restrict: 'E',
+        restrict: 'A',
         template: "<div id=\"map\"></div>",
         link: function (scope, element, attrs) {
             var geojson;
@@ -230,14 +244,9 @@ app.directive('leafletMap', function() {
 
             function regionClicked(e)
             {
-                var zipcode = e.target.feature.id
-                $.ajax({ 
-                    type: "GET",
-                    url: "/data/zipcode/"+zipcode,
-                    success: function(data){        
-                    alert(data);
-                    }
-                });
+                var zipcode = e.target.feature.id;
+                var url = "/data/zipcode/"+zipcode;
+                return alert(scope.getData(url));
             }   
         
         }

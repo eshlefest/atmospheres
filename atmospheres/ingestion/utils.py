@@ -79,6 +79,14 @@ def get_zipcode(lon,lat):
             return p[1]
 
 def add_random_tweets_to_db(num_tweets,date_range):
+    """
+    This function will randomly generate num_tweets with uniformly distributed sentiment
+    the dates of the tweets will range between now and N number of days ago.  N=date_range
+    location of tweet is randomly chosen within the bounding box of SF
+
+    TODO write remove_random_tweets function
+
+    """
     hour_range = date_range * 24
     db = get_mongo_reader()
 

@@ -117,8 +117,8 @@ app.config(function($routeProvider) {
             templateUrl: 'geo_new.html',
             controller: 'MapController'
         })
-        .when('http://plot.ly', {
-            templateUrl: 'geo_false.html'
+        .when('/about', {
+            templateUrl: 'about.html'
         })
         .otherwise({
             redirectTo: '/'

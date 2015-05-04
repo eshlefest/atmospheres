@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngRoute']);
 
 // app.directive('mapViz', function() {
 //      return {
@@ -111,6 +111,20 @@ function redraw() {
     };
 });
 
+app.config(function($routeProvider) {
+    $routeProvider
+        .when('/', {
+            templateUrl: 'geo_new.html',
+            controller: 'MapController'
+        })
+        .when('http://plot.ly', {
+            templateUrl: 'geo_false.html'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+});
+
 /**
  * controller to make a ajax call to a URL
  */
@@ -152,8 +166,13 @@ app.directive('map', function() {
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (e) {
-                if(e)
-                    this._div.innerHTML = '<h4>'+e.target.feature.id+', Sentiment</h4>' +  e.target.feature.sentiment
+                if(e) {
+                    var zipcode = e.target.feature.id;
+                    var url = "/data/zipcode/"+zipcode;
+                    this._div.innerHTML = '<h4>'+e.target.feature.id+', Sentiment</h4>' +
+                        e.target.feature.sentiment + '</br>' +
+                        '<iframe width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
+                }
                 else
                     this._div.innerHTML = '<h4>Zipcode, Sentiment</h4>' 
             };
@@ -243,13 +262,13 @@ app.directive('map', function() {
         {
             var zipcode = e.target.feature.id;
             var url = "/data/zipcode/"+zipcode;
-            return alert(scope.getData(url));
+            return scope.getData(url);
         }   
     
     };
 
     return {
-        restrict: 'A',
+        restrict: 'E',
         template: "<div id=\"map\"></div>",
         link: linker
     };

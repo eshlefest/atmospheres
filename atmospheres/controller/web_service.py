@@ -35,6 +35,11 @@ def geo_js():
     r = render_template('geo.js')
     return Response(r, mimetype='text/javascript')
 
+@app.route('/leaflet-button.js')
+def leaflet_button_js():
+    r = render_template('leaflet-button.js')
+    return Response(r, mimetype='text/javascript')
+
 
 @app.route('/geo.css')
 def geo_css():

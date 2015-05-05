@@ -3,6 +3,8 @@ from atmospheres.db.datastore import DataStore
 from atmospheres.aggregator.sentiment_aggregator import SentimenetAgrregator
 from atmospheres.resources.sentiment import SentimentType
 from atmospheres.controller.geo_json import sf_geo_json
+from atmospheres.ingestion.utils import sf_zipcode_array,neighborhoods
+
 from datetime import timedelta, datetime
 
 import random

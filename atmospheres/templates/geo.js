@@ -283,7 +283,7 @@ L.control.Button = L.Control.extend({
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
             }
-        info.update(e);
+        
         }
 
         function resetHighlight(e) {
@@ -304,7 +304,7 @@ L.control.Button = L.Control.extend({
         {
             var zipcode = e.target.feature.id;
             var url = "/data/zipcode/"+zipcode;
-            return scope.getData(url);
+            info.update(e);
         }   
     
     };

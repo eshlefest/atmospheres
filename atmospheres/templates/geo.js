@@ -152,7 +152,26 @@ L.control.Button = L.Control.extend({
 });
 
 
+        var growFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "500",
+                    width: "900"
+                    }, 1000, function() {
+                    // Animation complete.
+                });
 
+                    $( "#shrink-button" ).click(shrinkFrame)
+            }
+
+            var shrinkFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "320",
+                    width: "240"
+                    }, 1000, function() {
+                    // Animation complete.
+                })}
 
 
 
@@ -184,7 +203,7 @@ L.control.Button = L.Control.extend({
                     var url = "/data/zipcode/"+zipcode;
                     html = '<h4>'+e.target.feature.id+', Sentiment</h4>' +
                         e.target.feature.sentiment + '</br>' +
-                        '<iframe width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
+                        '<iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
                 
                     this.setHTML(html)
                 }
@@ -222,9 +241,12 @@ L.control.Button = L.Control.extend({
             var barGraphClicked = function(){
 
                 var url = "/data/sf/bar";
-                var html = '<iframe width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
+                var html = '<a id="shrink-button" href="#">shrink<a><iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
                 info.setHTML(html);
+                growFrame();
             }
+
+            
 
 
             var myButtonOptions = {
@@ -305,6 +327,9 @@ L.control.Button = L.Control.extend({
             var zipcode = e.target.feature.id;
             var url = "/data/zipcode/"+zipcode;
             info.update(e);
+
+
+            growFrame();
         }   
     
     };

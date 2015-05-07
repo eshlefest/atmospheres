@@ -169,13 +169,13 @@ def get_plotly_timez_zip_series_url(x, y, z, filename):
                 size = 18
             )
         ),
-	xaxis = XAxis(
-            title = 'Zipcodes',
-            titlefont = Font(
-                family = 'Courier New, monospace',
-                size = 18
-            )
-        ),
+	#xaxis = XAxis(
+    #        title = 'Zipcodes',
+    #        titlefont = Font(
+    #            family = 'Courier New, monospace',
+    #            size = 18
+    #        )
+    #    ),
         yaxis = YAxis(
             title = 'Sentiments',
             titlefont = Font(

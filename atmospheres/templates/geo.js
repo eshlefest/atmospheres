@@ -202,7 +202,7 @@ L.control.Button = L.Control.extend({
                     var zipcode = e.target.feature.id;
                     var url = "/data/zipcode/"+zipcode;
                     html = '<h4>'+e.target.feature.id+', Sentiment</h4>' +
-                        e.target.feature.sentiment + '</br>' +
+                        e.target.feature.sentiment + '</br>' +'<a id="shrink-button" href="#">shrink</a>'+
                         '<iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
                 
                     this.setHTML(html)
@@ -241,7 +241,7 @@ L.control.Button = L.Control.extend({
             var barGraphClicked = function(){
 
                 var url = "/data/sf/bar";
-                var html = '<a id="shrink-button" href="#">shrink<a><iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
+                var html = '<a id="shrink-button" href="#">shrink</a><iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
                 info.setHTML(html);
                 growFrame();
             }

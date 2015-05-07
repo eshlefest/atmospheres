@@ -143,51 +143,6 @@ def get_plotly_time_series_url(x, y, filename):
     plot_url = py.plot(figure, filename=filename, auto_open=False)
     return plot_url 
 
-def get_plotly_timez_zip_series_url(x, y, z, filename):
-    """
-        This inputs data and spits out a scatter graph
-        :param x: coordinates are datetimes
-        :param y: coordinates are zipcodes
-	:param z: coordinates are sentiments
-    """
-    data = Data([
-                Scatter(
-                         x=x,
-                         y=y,
-			 z=z,
-                         name='Average Sentiment Value by Date and Zipcode',
-                )
-    ])
-
-    # Adding legends, coordinate names, and titles to graph
-    layout = Layout(
-        title = filename,
-        xaxis = XAxis(
-            title = 'Dates',
-            titlefont = Font(
-                family = 'Courier New, monospace',
-                size = 18
-            )
-        ),
-	xaxis = XAxis(
-            title = 'Zipcodes',
-            titlefont = Font(
-                family = 'Courier New, monospace',
-                size = 18
-            )
-        ),
-        yaxis = YAxis(
-            title = 'Sentiments',
-            titlefont = Font(
-                family = 'Courier New, monospace',
-                size = 18
-            )
-        ),
-    )
-
-    figure = Figure(data=data, layout=layout)
-    plot_url = py.plot(figure, filename=filename, auto_open=False)
-    return plot_url 
 
     #This inputs data and spits out a bar graph
 def get_plotly_zip_sentiment_series_url(x,y,filename):

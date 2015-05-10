@@ -15,17 +15,19 @@ app.config(function($routeProvider) {
         });
 });
 
+
 /**
  * controller to make a ajax call to a URL
  */
 
 app.controller('MapController', ['$scope', '$http', function($scope, $http) {
     $scope.data = '';
-    $scope.getData = function(URL) {
+    $scope.getData = function(URL,embed_graph) {
         $http.get(URL).success(function(data) {
-            $scope.data = data;
+            embed_graph(data)
+
         })
-        return $scope.data;
+        return false;
     }
 }]);
 
@@ -152,27 +154,6 @@ L.control.Button = L.Control.extend({
 });
 
 
-        var growFrame = function(){
-                
-                    $( "#graph-frame" ).animate({
-                    height: "500",
-                    width: "900"
-                    }, 1000, function() {
-                    // Animation complete.
-                });
-
-                    $( "#shrink-button" ).click(shrinkFrame)
-            }
-
-            var shrinkFrame = function(){
-                
-                    $( "#graph-frame" ).animate({
-                    height: "320",
-                    width: "240"
-                    }, 1000, function() {
-                    // Animation complete.
-                })}
-
 
 
 
@@ -216,6 +197,14 @@ L.control.Button = L.Control.extend({
 
             }
 
+            info.embedGraph = function(graph_url){
+                html = '<a id="shrink-button" href="#">shrink</a>'+
+                        '<iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+graph_url+'></iframe>';
+                
+                    info.setHTML(html)
+                    growFrame()
+            }
+
             info.addTo(map);
 
             var legend = L.control({position: 'bottomright'});
@@ -239,14 +228,33 @@ L.control.Button = L.Control.extend({
             legend.addTo(map);
             
             var barGraphClicked = function(){
+                growFrame();
 
                 var url = "/data/sf/bar";
-                var html = '<a id="shrink-button" href="#">shrink</a><iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
-                info.setHTML(html);
-                growFrame();
+                scope.getData(url, info.embedGraph);
+                
             }
 
-            
+              var growFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "500",
+                    width: "900"
+                    }, 1000, function() {
+                    // Animation complete.
+                });
+
+                    $( "#shrink-button" ).click(shrinkFrame)
+            }
+
+            var shrinkFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "320",
+                    width: "240"
+                    }, 1000, function() {
+                    // Animation complete.
+                })}
 
 
             var myButtonOptions = {
@@ -324,12 +332,14 @@ L.control.Button = L.Control.extend({
 
         function regionClicked(e)
         {
+            
             var zipcode = e.target.feature.id;
             var url = "/data/zipcode/"+zipcode;
-            info.update(e);
+            scope.getData(url, info.embedGraph);
+            
 
 
-            growFrame();
+            
         }   
     
     };

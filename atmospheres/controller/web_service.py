@@ -8,7 +8,6 @@ from atmospheres.view.view_aggregator import (
     get_sf_graph_url,
 )
 
-
 @app.route('/')
 def home():
     return render_template('geo_new.html')

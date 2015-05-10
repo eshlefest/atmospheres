@@ -14,11 +14,14 @@ from atmospheres.models.tweet import Tweet
 zip_polygons = []
 sf_zipcode_array = []
 neighborhoods = []
+representative_points = {}
 
 # populate shapely polygon list
 for feature in sf_geo_json["features"]:
     polygon = Polygon(feature["geometry"]["geometries"][0]["coordinates"][0])
     zip_code = feature["id"]
+    representative_points[zip_code] = [polygon.representative_point().x,polygon.representative_point().y]
+
     sf_zipcode_array.append(str(zip_code))
     neighborhoods.append(feature["neighborhood"])
     zip_polygons.append((polygon,zip_code))

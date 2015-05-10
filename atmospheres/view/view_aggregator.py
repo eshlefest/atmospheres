@@ -3,7 +3,7 @@ from atmospheres.db.datastore import DataStore
 from atmospheres.aggregator.sentiment_aggregator import SentimenetAgrregator
 from atmospheres.resources.sentiment import SentimentType
 from atmospheres.controller.geo_json import sf_geo_json
-from atmospheres.ingestion.utils import sf_zipcode_array,neighborhoods
+from atmospheres.ingestion.utils import sf_zipcode_array,neighborhoods,representative_points
 
 from datetime import timedelta, datetime
 
@@ -102,9 +102,44 @@ def get_sentiments_json():
             item["sentiment"] = 1
         else:
             item["sentiment"] = float(positive_count - negative_count) / float(positive_count + negative_count)
-        print "zipcode:" + zipcode + "positive" + str(positive_count), str(negative_count),  str(item["sentiment"])   
+        print "zipcode:" + zipcode + "positive" + str(positive_count), str(negative_count),  str(item["sentiment"])
+
+        item["point"] = representative_points[zipcode]
+        item["trend"] = getTrend(aggregator,zipcode)
+
+
+
+
     aggregated_result = json.dumps(data)
     return aggregated_result
+
+
+def getTrend(aggregator,zipcode):
+    now = datetime.now();
+    delta = timedelta(hours=6);
+
+
+
+    positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode, now-delta,now)
+    negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode, now-delta,now)
+
+    if positive_count == 0 and negative_count == 0:
+            current_sentiment = 0
+    else:
+            current_sentiment = float(positive_count - negative_count) / float(positive_count + negative_count)
+
+    positive_count =  aggregator.get_sentiment_count(SentimentType.positive, zipcode, now - delta - delta,now-delta)
+    negative_count =  aggregator.get_sentiment_count(SentimentType.negative, zipcode, now - delta - delta,now-delta)
+
+    if positive_count == 0 and negative_count == 0:
+            previous_sentiment = 0
+    else:
+            previous_sentiment = float(positive_count - negative_count) / float(positive_count + negative_count)
+
+    if previous_sentiment > current_sentiment:
+        return "down"
+
+    return "up"
 
 def get_plotly_time_series_url(x, y, filename):
     """

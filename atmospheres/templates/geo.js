@@ -272,10 +272,43 @@ L.control.Button = L.Control.extend({
 
             geojson = L.geoJson(data,{style: style,onEachFeature: onEachFeature}).addTo(map);
             
+            drawArrows(data,map)
+            
+
             
         }
 
-        
+        function drawArrows(data,map)
+        {
+            var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize:     [20, 20],
+                shadowSize:   [50, 64],
+                iconAnchor:   [0, 0],
+                shadowAnchor: [4, 62],
+                popupAnchor:  [-3, -76]
+            }
+        });
+
+        var greenIcon = new LeafIcon({iconUrl: 'http://png-2.findicons.com/files/icons/42/basic/64/up.png'}),
+            redIcon = new LeafIcon({iconUrl: 'http://iconbug.com/data/9c/48/ec0ddc3c64be1bbbc5340ff91bd7dff2.png'});
+
+            var icon;
+            features = data.features;
+            for(var i = 0; i<features.length; i++)
+            {
+                if(features[i].trend == "up")
+                    icon = greenIcon;
+                else
+                    icon = redIcon;
+                
+                var point =  features[i].point
+                point = [parseFloat(point[1]),parseFloat(point[0])];
+                L.marker(point,{icon:icon}).addTo(map);
+
+            }
+
+        }
 
 
         function getColor(d) {

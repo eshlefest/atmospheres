@@ -33,10 +33,93 @@
     <div ng-controller="MapController">
         <map></map>
     </div>
+
+	<div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">Our Team</h2>
+        </div>
+        <div class="col-lg-3 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Eric Chu<br>
+                <small>Data visualization</small>
+            </h3>
+        </div>
+        <div class="col-lg-3 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Ryan Eshleman<br>
+                <small>Tech Lead and backend</small>
+            </h3>
+        </div>
+        <div class="col-lg-3 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Harini Parthasarathi<br>
+                <small>Data visualization</small>
+            </h3>
+        </div>
+        <div class="col-lg-3 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Sammy Patenotte<br>
+                <small>Frontend</small>
+            </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Sree Vidya Sastre<br>
+                <small>Frontend</small>
+            </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Vishal Ravi Shankar<br>
+                <small>Frontend</small>
+            </h3>
+        </div>
+        <div class="col-lg-4 col-sm-6 text-center">
+            <img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
+            <h3>Kumari Sweta<br>
+                <small>Backend</small>
+            </h3>
+        </div>
+    </div>
+
     <div class="about">
-        <a href="/about" class="btn btn-default" role="button">
+        <a href="" class="btn btn-default" role="button">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Our team
     </a>
     </div>
+    <div class="back-to-top">
+        <a href="" class="btn btn-default" role="button">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Back to top
+    </a>
 </body>
-</html>v
+
+<script>
+jQuery(document).ready(function() {
+	// Hide Back to top on load
+	jQuery('.back-to-top').fadeOut(0);
+    var offset = 500;
+    var duration = 300;
+    jQuery(window).scroll(function() {
+        if (jQuery(this).scrollTop() > offset) {
+            jQuery('.about').fadeOut(duration);
+            jQuery('.back-to-top').fadeIn(duration);
+        } else {
+            jQuery('.back-to-top').fadeOut(duration);
+            jQuery('.about').fadeIn(duration);
+        }
+    });
+
+    jQuery('.back-to-top').click(function(event) {
+        event.preventDefault();
+        jQuery('html, body').animate({scrollTop: 0}, duration);
+        return false;
+    });
+    jQuery('.about').click(function(event) {
+        event.preventDefault();
+        jQuery('html, body').animate({ scrollTop: $(document).height() }, duration);
+        return false;
+    });
+});
+</script>
+
+</html>

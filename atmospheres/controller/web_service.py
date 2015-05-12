@@ -12,6 +12,11 @@ from atmospheres.view.view_aggregator import (
 def home():
     return render_template('geo_new.html')
 
+# Get images from static folder
+@app.route('/static/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
+
 @app.route('/old')
 def home_old():
     return render_template('geo.html')

@@ -12,22 +12,9 @@ from atmospheres.view.view_aggregator import (
 def home():
     return render_template('geo_new.html')
 
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
-@app.route('/about.css')
-def about_css():
-    r = render_template('about.css')
-    return Response(r, mimetype='text/css')
-
-
 @app.route('/old')
 def home_old():
     return render_template('geo.html')
-
 
 @app.route('/geo.js')
 def geo_js():

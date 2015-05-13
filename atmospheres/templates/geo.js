@@ -313,14 +313,14 @@ L.control.Button = L.Control.extend({
 
         function getColor(d) {
 
-            return  d > .7 ? '#CC0066' :
-                    d > .5  ? '#FF0066' :
-                    d > .3  ? '#FF6699' :
-                    d > 0  ? '#FFCCCC' :
-                    d > -.3   ? '#66FFFF' :
-                    d > -.5   ? '#6699FF' :
+            return  d > .7 ? '#FF0066' :
+                    d > .5  ? '#FF4D94' :
+                    d > .3  ? '#FF80B2' :
+                    d > 0  ? '#FFCCE0' :
+                    d > -.3   ? '#99B2FF' :
+                    d > -.5   ? '#5C85FF' :
                     d > -.7   ? '#3366FF' :
-                               '#FFEDA0';
+                               '#1F3D99';
         }
 
         function style(feature) {

@@ -15,17 +15,19 @@ app.config(function($routeProvider) {
         });
 });
 
+
 /**
  * controller to make a ajax call to a URL
  */
 
 app.controller('MapController', ['$scope', '$http', function($scope, $http) {
     $scope.data = '';
-    $scope.getData = function(URL) {
+    $scope.getData = function(URL,embed_graph) {
         $http.get(URL).success(function(data) {
-            $scope.data = data;
+            embed_graph(data)
+
         })
-        return $scope.data;
+        return false;
     }
 }]);
 
@@ -152,27 +154,6 @@ L.control.Button = L.Control.extend({
 });
 
 
-        var growFrame = function(){
-                
-                    $( "#graph-frame" ).animate({
-                    height: "500",
-                    width: "900"
-                    }, 1000, function() {
-                    // Animation complete.
-                });
-
-                    $( "#shrink-button" ).click(shrinkFrame)
-            }
-
-            var shrinkFrame = function(){
-                
-                    $( "#graph-frame" ).animate({
-                    height: "320",
-                    width: "240"
-                    }, 1000, function() {
-                    // Animation complete.
-                })}
-
 
 
 
@@ -202,7 +183,7 @@ L.control.Button = L.Control.extend({
                     var zipcode = e.target.feature.id;
                     var url = "/data/zipcode/"+zipcode;
                     html = '<h4>'+e.target.feature.id+', Sentiment</h4>' +
-                        e.target.feature.sentiment + '</br>' +
+                        e.target.feature.sentiment + '</br>' +'<a id="shrink-button" href="#">shrink</a>'+
                         '<iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
                 
                     this.setHTML(html)
@@ -214,6 +195,14 @@ L.control.Button = L.Control.extend({
             info.setHTML = function(html){
                 this._div.innerHTML = html;
 
+            }
+
+            info.embedGraph = function(graph_url){
+                html = '<a id="shrink-button" href="#">shrink</a>'+
+                        '<iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+graph_url+'></iframe>';
+                
+                    info.setHTML(html)
+                    growFrame()
             }
 
             info.addTo(map);
@@ -229,8 +218,8 @@ L.control.Button = L.Control.extend({
                 // loop through our density intervals and generate a label with a colored square for each interval
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
-                        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+</br>');
+                        '<i style="background:' + getColor(grades[i]) + '"></i> ' +
+                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i] + '<br>' : '+</br>');
                 }
 
                 return div;
@@ -239,14 +228,33 @@ L.control.Button = L.Control.extend({
             legend.addTo(map);
             
             var barGraphClicked = function(){
+                growFrame();
 
                 var url = "/data/sf/bar";
-                var html = '<a id="shrink-button" href="#">shrink<a><iframe id="graph-frame" width="320" height="240" frameborder="0" seamless="seamless" scrolling="no" src='+scope.getData(url)+'></iframe>';
-                info.setHTML(html);
-                growFrame();
+                scope.getData(url, info.embedGraph);
+                
             }
 
-            
+              var growFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "500",
+                    width: "900"
+                    }, 1000, function() {
+                    // Animation complete.
+                });
+
+                    $( "#shrink-button" ).click(shrinkFrame)
+            }
+
+            var shrinkFrame = function(){
+                
+                    $( "#graph-frame" ).animate({
+                    height: "320",
+                    width: "240"
+                    }, 1000, function() {
+                    // Animation complete.
+                })}
 
 
             var myButtonOptions = {
@@ -264,17 +272,50 @@ L.control.Button = L.Control.extend({
 
             geojson = L.geoJson(data,{style: style,onEachFeature: onEachFeature}).addTo(map);
             
+            drawArrows(data,map)
+            
+
             
         }
 
-        
+        function drawArrows(data,map)
+        {
+            var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize:     [20, 20],
+                shadowSize:   [50, 64],
+                iconAnchor:   [0, 0],
+                shadowAnchor: [4, 62],
+                popupAnchor:  [-3, -76]
+            }
+        });
+
+        var greenIcon = new LeafIcon({iconUrl: 'http://png-2.findicons.com/files/icons/42/basic/64/up.png'}),
+            redIcon = new LeafIcon({iconUrl: 'http://iconbug.com/data/9c/48/ec0ddc3c64be1bbbc5340ff91bd7dff2.png'});
+
+            var icon;
+            features = data.features;
+            for(var i = 0; i<features.length; i++)
+            {
+                if(features[i].trend == "up")
+                    icon = greenIcon;
+                else
+                    icon = redIcon;
+                
+                var point =  features[i].point
+                point = [parseFloat(point[1]),parseFloat(point[0])];
+                L.marker(point,{icon:icon}).addTo(map);
+
+            }
+
+        }
 
 
         function getColor(d) {
 
             return  d > .7 ? '#CC0066' :
                     d > .5  ? '#FF0066' :
-                    d > .3  ? '#FF6699' :
+                    d > .3  ? '#FF80B2' :
                     d > 0  ? '#FFCCCC' :
                     d > -.3   ? '#66FFFF' :
                     d > -.5   ? '#6699FF' :
@@ -324,12 +365,14 @@ L.control.Button = L.Control.extend({
 
         function regionClicked(e)
         {
+            
             var zipcode = e.target.feature.id;
             var url = "/data/zipcode/"+zipcode;
-            info.update(e);
+            scope.getData(url, info.embedGraph);
+            
 
 
-            growFrame();
+            
         }   
     
     };

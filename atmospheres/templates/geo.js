@@ -212,7 +212,7 @@ L.control.Button = L.Control.extend({
             legend.onAdd = function (map) {
 
                 var div = L.DomUtil.create('div', 'info legend'),
-                    grades = [-1,-.7, -.5, -.3, 0, .3, .5, .7,1],
+                    grades = [-1,-.5, 0, .55, .65, .75, .85, .9,1],
                     labels = [];
 
                 // loop through our density intervals and generate a label with a colored square for each interval
@@ -313,13 +313,13 @@ L.control.Button = L.Control.extend({
 
         function getColor(d) {
 
-            return  d > .7 ? '#FF0066' :
-                    d > .5  ? '#FF4D94' :
-                    d > .3  ? '#FF80B2' :
-                    d > 0  ? '#FFCCE0' :
-                    d > -.3   ? '#99B2FF' :
-                    d > -.5   ? '#5C85FF' :
-                    d > -.7   ? '#3366FF' :
+            return  d > .9 ? '#FF0066' :
+                    d > .85  ? '#FF4D94' :
+                    d > .75  ? '#FF80B2' :
+                    d > .65  ? '#FFCCE0' :
+                    d > .55   ? '#99B2FF' :
+                    d > 0   ? '#5C85FF' :
+                    d > -.5   ? '#3366FF' :
                                '#1F3D99';
         }
 

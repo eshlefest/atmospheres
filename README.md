@@ -2,7 +2,7 @@
 868 Term Project
 Webapp to categorize and display happiness in San Francisco according to real-time tweets.
 
-![]https://github.com/eshlefest/atmospheres/blob/master/capture.jpg
+![](https://github.com/eshlefest/atmospheres/blob/master/capture.jpg)
 
 Backend:
   Ryan and Sweta

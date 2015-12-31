@@ -1,15 +1,18 @@
 # atmospheres
 868 Term Project
+Webapp to categorize and display happiness in San Francisco according to real-time tweets.
+
+![]https://github.com/eshlefest/atmospheres/blob/master/capture.jpg
 
 Backend:
   Ryan and Sweta
-  
+
 Angular hackers
   vishal, vidya, sammy
-  
+
 data-viz:
   Eric, Harini
-  
+
   link to  ProductBacklog:  https://docs.google.com/spreadsheets/d/1JBswpF0NF2fyiuDTSWsKhXERHPxPgBGJPuK2QpmGLPw/edit#gid=0
 
 
